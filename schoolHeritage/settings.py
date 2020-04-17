@@ -77,9 +77,13 @@ WSGI_APPLICATION = 'schoolHeritage.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+     'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'school_heritage',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'USER': 'root',
+        'PASSWORD': '',
     }
 }
 
@@ -106,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-BR'
 
 TIME_ZONE = 'UTC'
 
