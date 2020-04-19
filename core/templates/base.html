@@ -26,7 +26,7 @@
           It's possible change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
       -->
         <div class="menu-head logo">
-            <a href="#" class="simple-text logo-normal">
+            <a href="{% url 'core:index' %}" class="simple-text logo-normal">
                 Controle de Patrimônio
             </a>
         </div>
@@ -71,21 +71,29 @@
                             <span class="navbar-toggler-bar bar3"></span>
                         </button>
                     </div>
-                    <a class="navbar-brand" href="#pablo">{% block title %}{% endblock %}</a>
+                    <a class="navbar-brand" href="#">{% block title %}{% endblock %}</a>
                 </div>
-                <button class="navbar-toggler" type="button" data-target="#navigation"
-                        aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="">
-                        <a href="{% url 'users:logout' %}">
-                            <i class="fas fa-sign-out-alt"></i>
-                        </a>
-                    </span>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navigation">
                     <ul class="navbar-nav">
                         <li class="nav-item">
+                            <a class="nav-link navbar-icon" href="{% url 'users:edit_password' %}">
+                                <i class="fas fa-key"></i>
+                                <p>&nbsp;
+                                    <span class="d-lg-none d-md-block">Alterar senha</span>
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link navbar-icon" href="{% url 'users:logout' %}">
                                 <i class="fas fa-sign-out-alt"></i>
+                                <p>&nbsp;
+                                    <span class="d-lg-none d-md-block">Sair</span>
+                                </p>
                             </a>
                         </li>
                     </ul>
