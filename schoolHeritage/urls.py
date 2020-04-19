@@ -1,7 +1,9 @@
 from django.contrib import admin
 from django.urls import path, include
+from users.admin import admin_site_classe
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include(('core.urls', 'core'), 'core')),
+    path('admin/', admin_site_classe.urls),
+    path('sistema/', include(('core.urls', 'core'), 'core')),
+    path('', include(('users.urls', 'users'), 'users')),
 ]
