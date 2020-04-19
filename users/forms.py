@@ -7,7 +7,7 @@ from .models import CustomUser
 
 class CustomUserAdminAuthenticationForm(AdminAuthenticationForm):
     def confirm_login_allowed(self, user):
-        if not user.is_schoolmaster:
+        if not user.role == 1:
             raise forms.ValidationError(
                 self.error_messages['invalid_login'],
                 code='invalid_login',
@@ -47,16 +47,19 @@ class CustomUserPasswordChangeForm(PasswordChangeForm):
         label='Senha antiga',
         strip=False,
         widget=forms.PasswordInput(
-            attrs={'autocomplete': 'current-password', 'autofocus': True, 'class': 'form-control', 'placeholder': 'Digite sua senha antiga'}),
+            attrs={'autocomplete': 'current-password', 'autofocus': True, 'class': 'form-control',
+                   'placeholder': 'Digite sua senha antiga'}),
     )
     new_password1 = forms.CharField(
         label='Nova senha',
-        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password', 'class': 'form-control', 'placeholder': 'Digite sua nova senha'}),
+        widget=forms.PasswordInput(
+            attrs={'autocomplete': 'new-password', 'class': 'form-control', 'placeholder': 'Digite sua nova senha'}),
         strip=False,
         help_text=password_validation.password_validators_help_text_html(),
     )
     new_password2 = forms.CharField(
         label='Confirmação de nova senha',
         strip=False,
-        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password', 'class': 'form-control', 'placeholder': 'Digite novamente a nova senha'}),
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password', 'class': 'form-control',
+                                          'placeholder': 'Digite novamente a nova senha'}),
     )

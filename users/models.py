@@ -8,9 +8,16 @@ from .managers import CustomUserManager
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
+    ROLE_CHOICES = (
+        (1, 'Diretor'),
+        (2, 'Professor'),
+        (3, 'Aluno')
+    )
+
     email = models.EmailField('E-mail', unique=True)
     name = models.CharField('Nome', max_length=80)
-    is_schoolmaster = models.BooleanField('É diretor?', default=False)
+    phone = models.CharField('Telefone', max_length=20)
+    role = models.IntegerField('Cargo', choices=ROLE_CHOICES)
     is_active = models.BooleanField('Está ativo?', default=True)
     date_joined = models.DateTimeField(default=timezone.now)
 
