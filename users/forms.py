@@ -21,10 +21,20 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ('email', 'name',)
 
 
-class CustomUserChangeForm(UserChangeForm):
+class CustomUserChangeForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Digite seu nome'})
+        self.fields['email'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Digite seu e-mail'})
+        self.fields['phone'].widget.attrs.update(
+            {'class': 'form-control telefone', 'placeholder': 'Digite seu telefone',
+             'pattern': '\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}'})
+        if self.instance.role != 1:
+            self.fields['name'].widget.attrs.update({'readonly': 'true'})
+
     class Meta:
         model = CustomUser
-        fields = ('email', 'name',)
+        fields = ['email', 'name', 'phone']
 
 
 class CustomUserAuthenticationForm(AuthenticationForm):
