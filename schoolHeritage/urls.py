@@ -6,5 +6,7 @@ urlpatterns = [
     path('admin/', admin_site_classe.urls),
     path('sistema/', include(('core.urls', 'core'), 'core')),
     path('', include(('users.urls', 'users'), 'users')),
-    path('salas/', include(('rooms.urls', 'rooms'), 'rooms'))
+    path('salas/', include(('rooms.urls', 'rooms'), 'rooms')),
+    path('itens/', include(('items.urls', 'items'), 'items')),
+
 ]
