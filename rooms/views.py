@@ -8,7 +8,7 @@ from .forms import RoomForm
 @login_required
 def index(request):
     rooms = Room.objects.all()
-    template_name = 'index.html'
+    template_name = 'rooms/index.html'
     form = RoomForm(request.POST or None)
     if form.is_valid():
         form.save()

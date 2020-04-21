@@ -12,8 +12,8 @@ class Login(auth_views.LoginView):
 
 
 @login_required
-def user_logged_edit_password(request):
-    template_name = 'user_logged_edit_password.html'
+def session_user_edit_password(request):
+    template_name = 'sessions/edit_password.html'
     context = {}
     form = CustomUserPasswordChangeForm(data=request.POST or None, user=request.user)
     if form.is_valid():
@@ -26,8 +26,8 @@ def user_logged_edit_password(request):
 
 
 @login_required
-def user_logged_edit(request):
-    template_name = 'user_logged_edit.html'
+def session_user_edit(request):
+    template_name = 'sessions/edit.html'
     context = {}
     form = CustomUserChangeForm(data=request.POST or None, instance=request.user)
     if form.is_valid():

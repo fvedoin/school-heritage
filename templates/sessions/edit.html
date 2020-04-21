@@ -1,7 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'layouts/base.html' %}
+{% load static %}
 
 {% block title %}
-    ALTERAR SENHA
+    ALTERAR DADOS
 {% endblock %}
 
 {% block content %}
@@ -9,7 +10,7 @@
         <div class="col-md-6 ml-auto mr-auto">
             <div class="card">
                 <div class="card-header text-center">
-                    <h5 class="title">Altere sua senha</h5>
+                    <h5 class="title">Altere seus dados</h5>
                 </div>
                 <div class="card-body">
                     {% if messages %}
@@ -49,4 +50,9 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'js/plugins/jquery.mask.min.js' %}"></script>
+    <script type="text/javascript">$(".telefone").mask("(00) 0000-00009");</script>
 {% endblock %}
