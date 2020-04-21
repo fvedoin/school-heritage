@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    SALAS
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-10 ml-auto mr-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">
+                        Adicionar Sala
+                        <buton class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-times"></i> Fechar
+                        </buton>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="pure-control-group">
+                                {{ field.label_tag }}
+                                {{ field }}
+                                {{ field.erros }}
+                            </div>
+                        {% endfor %}
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary btn-block">Salvar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 ml-auto mr-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">
+                        Lista de salas
+                        <buton class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-plus-square"></i> Adicionar Sala
+                        </buton>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class=" text-primary">
+                            <th>
+                                Nome
+                            </th>
+                            <th class="operation-column text-center">
+                                Operações
+                            </th>
+                            </thead>
+                            <tbody>
+                            {% for room in rooms %}
+                                <tr>
+                                    <td>
+                                        {{ room.name }}
+                                    </td>
+                                    <td class="text-right text-center">
+                                        <button class="btn btn-warning btn-icon">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-icon">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

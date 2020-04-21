@@ -4645,6 +4645,9 @@ Created using IcoMoon - icomoon.io
 
 .card .card-header .card-title {
     margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between
 }
 
 .card .map {
@@ -6024,4 +6027,8 @@ ul.errorlist li {
 
 .messages p {
     margin: 0.4em 0;
+}
+
+.operation-column {
+    width: 140px
 }
