@@ -1,0 +1,58 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}
+    ALTERAR DADOS
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 ml-auto mr-auto">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h5 class="title">Altere seus dados</h5>
+                </div>
+                <div class="card-body">
+                    {% if messages %}
+                        <div class="row">
+                            <div class="col-md-6 mr-auto ml-auto mb-2">
+                                <div class="messages">
+                                    {% for message in messages %}
+                                        <p>{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        {% for field in form %}
+                            <div class="row">
+                                <div class="col-md-6 ml-auto mr-auto">
+                                    <div class="form-group">
+                                        {{ field.label_tag }}
+                                        {{ field }}
+                                        {{ field.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <button class="btn btn-primary btn-block">Salvar</button>
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'js/plugins/jquery.mask.min.js' %}"></script>
+    <script type="text/javascript">$(".telefone").mask("(00) 0000-00009");</script>
+{% endblock %}

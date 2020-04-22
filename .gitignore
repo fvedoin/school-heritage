@@ -11,3 +11,5 @@ downloads
 eggs
 parts
 src/*.egg-info
+usuarios
+*/migrations/
