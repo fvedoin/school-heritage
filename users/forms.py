@@ -18,6 +18,17 @@ class UserAdminAuthenticationForm(AdminAuthenticationForm):
 
 
 class UserForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Digite seu nome'})
+        self.fields['email'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Digite seu e-mail'})
+        self.fields['phone'].widget.attrs.update(
+            {'class': 'form-control telefone', 'placeholder': 'Digite seu telefone',
+             'pattern': '\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}'})
+        self.fields['role'].widget.attrs.update({'class': 'form-control'})
+        self.fields['is_active'].widget.attrs.update({'class': 'form-check-input'})
+
+
     class Meta:
         model = User
         fields = ['email', 'name', 'phone', 'role', 'is_active']

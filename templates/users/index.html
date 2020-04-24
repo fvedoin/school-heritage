@@ -1,0 +1,148 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load users_filters %}
+
+{% block title %}
+    SALAS
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-10 ml-auto mr-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">
+                        Adicionar usuário
+                        <button class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-times"></i> Fechar
+                        </button>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mr-auto ml-auto mb-2">
+                            {% if messages %}
+                                <div class="messages">
+                                    {% for message in messages %}
+                                        <p>{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="id_{{ form.name.name }}">
+                                        {{ form.name.label }}
+                                    </label>
+                                    {{ form.name }}
+                                    {{ form.name.errors }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_{{ form.email.name }}">
+                                        {{ form.email.label }}
+                                    </label>
+                                    {{ form.email }}
+                                    {{ form.email.errors }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_{{ form.phone.name }}">
+                                        {{ form.phone.label }}
+                                    </label>
+                                    {{ form.phone }}
+                                    {{ form.phone.errors }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_{{ form.role.name }}">
+                                        {{ form.role.label }}
+                                    </label>
+                                    {{ form.role }}
+                                    {{ form.role.errors }}
+                                </div>
+                                <div class="form-check">
+                                    {{ form.is_active }}
+                                    <label for="id_{{ form.is_active.name }}" class="form-check-label">
+                                        {{ form.is_active.label }}
+                                    </label>
+                                    {{ form.is_active.errors }}
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mr-auto ml-auto">
+                                        <button type="submit" class="btn btn-primary btn-block">Salvar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 ml-auto mr-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">
+                        Lista de usuários
+                        <button class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-plus-square"></i> Adicionar usuário
+                        </button>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class=" text-primary">
+                            <tr>
+                                <th>E-mail</th>
+                                <th>
+                                    Nome
+                                </th>
+                                <th>Cargo</th>
+                                <th>Telefone</th>
+                                <th>Ativo</th>
+                                <th class="operation-column text-center">
+                                    Operações
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for user in users %}
+                                <tr>
+                                    <td>
+                                        {{ user.email|lower }}
+                                    </td>
+                                    <td>
+                                        {{ user.name|title }}
+                                    </td>
+                                    <td>
+                                        {{ user.role|get_role }}
+                                    </td>
+                                    <td>
+                                        {{ user.phone }}
+                                    </td>
+                                    <td>
+                                        {{ user.is_active|yesno }}
+                                    </td>
+                                    <td class="text-right text-center">
+                                        <button class="btn btn-warning btn-icon">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-icon">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'js/plugins/jquery.mask.min.js' %}"></script>
+    <script type="text/javascript">$(".telefone").mask("(00) 0000-00009");</script>
+{% endblock %}
