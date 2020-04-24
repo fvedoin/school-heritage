@@ -39,24 +39,26 @@
                         <p>Itens</p>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <p>Problemas</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'rooms:index' %}">
-                        <i class="fas fa-thumbtack"></i>
-                        <p>Salas</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'users:index' %}">
-                        <i class="fas fa-users"></i>
-                        <p>Usuários</p>
-                    </a>
-                </li>
+                {% if request.user.role == 1 %}
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>Problemas</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'rooms:index' %}">
+                            <i class="fas fa-thumbtack"></i>
+                            <p>Salas</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'users:index' %}">
+                            <i class="fas fa-users"></i>
+                            <p>Usuários</p>
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>

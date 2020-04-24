@@ -6,6 +6,7 @@ from .forms import UserAuthenticationForm, UserPasswordChangeForm, UserSessionFo
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from .decorators import schoolmaster_required
 
 User = get_user_model()
 
@@ -42,6 +43,7 @@ def session_user_edit(request):
 
 
 @login_required
+@schoolmaster_required
 def index(request):
     users = User.objects.exclude(pk=request.user.pk)
     template_name = 'users/index.html'
@@ -58,7 +60,9 @@ def index(request):
     context['users'] = users
     return render(request, template_name, context)
 
+
 @login_required
+@schoolmaster_required
 def edit(request, pk):
     template_name = 'users/edit.html'
     user = get_object_or_404(User, pk=pk)
@@ -70,7 +74,9 @@ def edit(request, pk):
     context['form'] = form
     return render(request, template_name, context)
 
+
 @login_required
+@schoolmaster_required
 def delete(request, pk):
     user = get_object_or_404(User, pk=pk)
     user.delete()
