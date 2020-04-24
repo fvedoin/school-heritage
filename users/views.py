@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login
 
 User = get_user_model()
 
+
 class Login(auth_views.LoginView):
     authentication_form = UserAuthenticationForm
     form_class = UserAuthenticationForm
@@ -37,6 +38,7 @@ def session_user_edit(request):
     context['form'] = form
     return render(request, template_name, context)
 
+
 @login_required
 def index(request):
     users = User.objects.all()
@@ -44,9 +46,10 @@ def index(request):
     context = {'post': False}
     form = UserCreateForm(data=request.POST or None)
     if form.is_valid():
-        form.save()
+        user = form.save()
         form = UserCreateForm()
         messages.success(request, 'Usuário cadastrado com sucesso')
+        messages.success(request, 'Um e-mail foi enviado para ' + user.email + ' com os dados de acesso')
     if request.POST:
         context['post'] = True
     context['form'] = form
