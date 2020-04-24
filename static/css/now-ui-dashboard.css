@@ -3002,72 +3002,6 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
     display: none;
 }
 
-.alert {
-    border: 0;
-    border-radius: 0.1875rem;
-    color: #FFFFFF;
-    padding-top: .9rem;
-    padding-bottom: .9rem;
-    position: relative;
-}
-
-.alert.alert-success {
-    background-color: #1be611;
-}
-
-.alert.alert-danger {
-    background-color: #ff5050;
-}
-
-.alert.alert-warning {
-    background-color: #ffbc50;
-}
-
-.alert.alert-info {
-    background-color: #46b3ff;
-}
-
-.alert.alert-primary {
-    background-color: #fa764b;
-}
-
-.alert i.fa,
-.alert i.now-ui-icons {
-    font-size: 20px;
-}
-
-.alert .close {
-    color: #FFFFFF !important;
-    opacity: .9;
-    text-shadow: none;
-    line-height: 0;
-    outline: 0;
-}
-
-.alert span[data-notify="icon"] {
-    font-size: 22px;
-    display: block;
-    left: 19px;
-    position: absolute;
-    top: 50%;
-    margin-top: -11px;
-}
-
-.alert button.close {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    margin-top: -13px;
-    width: 25px;
-    height: 25px;
-    padding: 3px;
-}
-
-.alert .close ~ span {
-    display: block;
-    max-width: 89%;
-}
-
 .alert.alert-with-icon {
     padding-left: 65px;
 }
@@ -6005,7 +5939,6 @@ ul.errorlist {
 }
 
 ul.errorlist li {
-    color: #C53F3F;
     display: block;
     margin: 0.3em 0;
     font-size: 0.9em;
@@ -6013,12 +5946,8 @@ ul.errorlist li {
     padding: 0;
 }
 
-.messages {
-    background: #1f8dd6;padding: 0.3em 1em;border-radius: 3px;color: #fff;
-}
-
-.messages p {
-    margin: 0.4em 0;
+.form-group > ul.errorlist > li {
+    color: #C53F3F;
 }
 
 .operation-column {
