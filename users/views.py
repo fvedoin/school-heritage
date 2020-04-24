@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth import views as auth_views, get_user_model
-from .forms import UserAuthenticationForm, UserPasswordChangeForm, UserSessionForm, UserForm
+from .forms import UserAuthenticationForm, UserPasswordChangeForm, UserSessionForm, UserCreateForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
@@ -42,10 +42,10 @@ def index(request):
     users = User.objects.all()
     template_name = 'users/index.html'
     context = {}
-    form = UserForm(data=request.POST or None)
+    form = UserCreateForm(data=request.POST or None)
     if form.is_valid():
         form.save()
-        form = UserForm()
+        form = UserCreateForm()
         messages.success(request, 'Usuário cadastrado com sucesso')
     context['form'] = form
     context['users'] = users

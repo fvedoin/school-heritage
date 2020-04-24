@@ -2,7 +2,8 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import password_validation, get_user_model
 from django.contrib.admin.forms import AdminAuthenticationForm
 from django import forms
-
+from core.utils import generate_password
+from core.mail import send_mail_template
 
 User = get_user_model()
 
@@ -17,7 +18,22 @@ class UserAdminAuthenticationForm(AdminAuthenticationForm):
             )
 
 
-class UserForm(forms.ModelForm):
+class UserCreateForm(forms.ModelForm):
+    def save(self, commit=True):
+        user = super(UserCreateForm, self).save(commit=False)
+        password = generate_password()
+        user.set_password(password)
+        if commit:
+            user.save()
+            template_name = 'users/create_user_mail.html'
+            subject = 'Login no sistema de controle de patrimônio'
+            context = {
+                'user': user,
+                'password': password
+            }
+            send_mail_template(subject, template_name, context, [user.email])
+        return user
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Digite seu nome'})
@@ -27,7 +43,6 @@ class UserForm(forms.ModelForm):
              'pattern': '\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}'})
         self.fields['role'].widget.attrs.update({'class': 'form-control'})
         self.fields['is_active'].widget.attrs.update({'class': 'form-check-input'})
-
 
     class Meta:
         model = User

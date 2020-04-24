@@ -127,6 +127,16 @@ STATICFILES_DIRS = [
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
+DEFAULT_FROM_EMAIL = 'Felipe <ficechin@gmail.com>'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_PORT = 587
+EMAIL_HOST_USER = '@gmail.com'
+EMAIL_HOST_PASSWORD = ''
+
+CONTACT_EMAIL = 'ficechin@hotmail.com'
 
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'core:index'

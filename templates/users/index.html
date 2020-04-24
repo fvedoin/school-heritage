@@ -3,7 +3,7 @@
 {% load users_filters %}
 
 {% block title %}
-    SALAS
+    USUÁRIOS
 {% endblock %}
 
 {% block content %}
@@ -94,9 +94,7 @@
                             <thead class=" text-primary">
                             <tr>
                                 <th>E-mail</th>
-                                <th>
-                                    Nome
-                                </th>
+                                <th>Nome</th>
                                 <th>Cargo</th>
                                 <th>Telefone</th>
                                 <th>Ativo</th>
@@ -115,13 +113,13 @@
                                         {{ user.name|title }}
                                     </td>
                                     <td>
-                                        {{ user.role|get_role }}
+                                        {{ user.role|get_role|capfirst }}
                                     </td>
                                     <td>
                                         {{ user.phone }}
                                     </td>
                                     <td>
-                                        {{ user.is_active|yesno }}
+                                        {{ user.is_active|yesno|capfirst }}
                                     </td>
                                     <td class="text-right text-center">
                                         <button class="btn btn-warning btn-icon">
