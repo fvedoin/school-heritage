@@ -41,12 +41,14 @@ def session_user_edit(request):
 def index(request):
     users = User.objects.all()
     template_name = 'users/index.html'
-    context = {}
+    context = {'post': False}
     form = UserCreateForm(data=request.POST or None)
     if form.is_valid():
         form.save()
         form = UserCreateForm()
         messages.success(request, 'Usuário cadastrado com sucesso')
+    if request.POST:
+        context['post'] = True
     context['form'] = form
     context['users'] = users
     return render(request, template_name, context)
