@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import Login, session_user_edit_password, session_user_edit, index, edit
+from .views import Login, session_user_edit_password, session_user_edit, index, edit, delete
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -8,5 +8,6 @@ urlpatterns = [
     path('alterar-dados/', session_user_edit, name='session_user_edit'),
     path('usuarios/', index, name='index'),
     path('usuarios/alterar/<int:pk>/', edit, name='edit'),
+    path('usuarios/deletar/<int:pk>/', delete, name='delete'),
     path('sair/', auth_views.LogoutView.as_view(next_page='users:login'), name='logout'),
 ]

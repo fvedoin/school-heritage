@@ -43,7 +43,7 @@ def session_user_edit(request):
 
 @login_required
 def index(request):
-    users = User.objects.all()
+    users = User.objects.exclude(pk=request.user.pk)
     template_name = 'users/index.html'
     context = {'post': False}
     form = UserCreateForm(data=request.POST or None)
