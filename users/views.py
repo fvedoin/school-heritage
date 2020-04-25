@@ -1,10 +1,10 @@
-from django.shortcuts import render, get_object_or_404
-import json
-from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import views as auth_views, get_user_model
 from .forms import UserAuthenticationForm, UserPasswordChangeForm, UserSessionForm, UserCreateForm, UserEditForm
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.contrib import messages
+from django.views.generic import View
 from django.contrib.auth import authenticate, login
 from .decorators import schoolmaster_required
 
@@ -42,43 +42,67 @@ def session_user_edit(request):
     return render(request, template_name, context)
 
 
-@login_required
-@schoolmaster_required
-def index(request):
-    users = User.objects.exclude(pk=request.user.pk)
+@method_decorator(login_required, name='dispatch')
+@method_decorator(schoolmaster_required, name='dispatch')
+class UserIndexView(View):
     template_name = 'users/index.html'
-    context = {'post': False}
-    form = UserCreateForm(data=request.POST or None)
-    if form.is_valid():
-        user = form.save()
+
+    def get(self, request):
+        users = User.objects.exclude(pk=request.user.pk)
+        context = {}
         form = UserCreateForm()
-        messages.success(request, 'Usuário cadastrado com sucesso.')
-        messages.success(request, 'Um e-mail foi enviado para ' + user.email + ' com os dados de acesso.')
-    if request.POST:
+        context['post'] = False
+        context['form'] = form
+        context['users'] = users
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        context = {}
+        form = UserCreateForm(data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            form = UserCreateForm()
+            messages.success(request, 'Usuário cadastrado com sucesso.')
+            messages.success(request, 'Um e-mail foi enviado para ' + user.email + ' com os dados de acesso.')
+        users = User.objects.exclude(pk=request.user.pk)
         context['post'] = True
-    context['form'] = form
-    context['users'] = users
-    return render(request, template_name, context)
+        context['form'] = form
+        context['users'] = users
+        return render(request, self.template_name, context)
 
 
-@login_required
-@schoolmaster_required
-def edit(request, pk):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(schoolmaster_required, name='dispatch')
+class UserEditView(View):
     template_name = 'users/edit.html'
-    user = get_object_or_404(User, pk=pk)
-    context = {}
-    form = UserEditForm(data=request.POST or None, instance=user)
-    if form.is_valid():
-        form.save()
-        messages.success(request, 'Usuário alterado com sucesso')
-    context['form'] = form
-    return render(request, template_name, context)
 
+    def dispatch(self, *args, **kwargs):
+        method = self.request.POST.get('_method', '').lower()
+        if method == 'put':
+            return self.put(*args, **kwargs)
+        elif method == 'delete':
+            return self.delete(*args, **kwargs)
+        return super(UserEditView, self).dispatch(*args, **kwargs)
 
-@login_required
-@schoolmaster_required
-def delete(request, pk):
-    user = get_object_or_404(User, pk=pk)
-    user.delete()
-    data = {'success': True, 'message': 'Usuário excluído com sucesso'}
-    return HttpResponse(json.dumps(data), content_type='application/json')
+    def get(self, request, pk):
+        user = get_object_or_404(User, pk=pk)
+        context = {}
+        form = UserEditForm(instance=user)
+        context['form'] = form
+        return render(request, self.template_name, context)
+
+    def put(self, request, pk):
+        user = get_object_or_404(User, pk=pk)
+        context = {}
+        form = UserEditForm(data=request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Usuário alterado com sucesso')
+        context['form'] = form
+        return render(request, self.template_name, context)
+
+    def delete(self, request, pk):
+        user = get_object_or_404(User, pk=pk)
+        user.delete()
+        messages.success(request, 'Usuário excluído com sucesso')
+        return redirect('users:index')

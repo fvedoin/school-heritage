@@ -25,7 +25,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6 mr-auto ml-auto mb-2">
-                            {% if messages %}
+                            {% if post and messages %}
                                 <div class="messages">
                                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                                         {% for message in messages %}
@@ -98,6 +98,18 @@
                     </h4>
                 </div>
                 <div class="card-body">
+                    {% if post is False and messages %}
+                        <div class="messages">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {% for message in messages %}
+                                    <span>{{ message }}</span>
+                                {% endfor %}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    {% endif %}
                     <div class="messages" id="div-messages-delete-user" style="display: none"></div>
                     <div class="row">
                         <div class="col-4 col-md-3">
@@ -152,12 +164,16 @@
                                         {{ user.is_active|yesno|capfirst }}
                                     </td>
                                     <td class="text-right text-center">
-                                        <a href="{% url 'users:edit' user.pk %}" class="btn btn-warning btn-icon">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a href="{% url 'users:delete' user.pk %}" class="btn btn-danger btn-icon btn-delete-user">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
+                                        <form method="post" action="{% url 'users:edit' user.pk %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="_method" value="delete">
+                                            <a href="{% url 'users:edit' user.pk %}" class="btn btn-warning btn-icon">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <button type="submit" class="btn btn-danger btn-icon">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             {% endfor %}

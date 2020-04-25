@@ -34,6 +34,7 @@
                             {% endif %}
                             <form method="post">
                                 {% csrf_token %}
+                                <input type="hidden" name="_method" value="put">
                                 <div class="form-group">
                                     <label for="id_{{ form.name.name }}">
                                         {{ form.name.label }}
