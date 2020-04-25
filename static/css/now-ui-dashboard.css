@@ -1764,21 +1764,10 @@ fieldset[disabled] .form-control {
 }
 
 textarea.form-control {
-    max-width: 100%;
-    max-height: 80px;
-    padding: 10px 10px 0 0;
-    resize: none;
-    border: none;
-    border-bottom: 1px solid #E3E3E3;
-    border-radius: 0;
-    line-height: 2;
-}
-
-textarea.form-control:focus,
-textarea.form-control:active {
-    border-left: none;
-    border-top: none;
-    border-right: none;
+    border-radius: 20px;
+    line-height: normal;
+    height: auto;
+    font-size: 0.8571em;
 }
 
 .has-success.form-group .form-control,
@@ -3609,8 +3598,8 @@ Created using IcoMoon - icomoon.io
 
 .table > thead > tr > th {
     border-bottom-width: 1px;
-    font-size: 1.45em;
-    font-weight: 300;
+    font-size: 1.25em;
+    font-weight: 300 !important;
     border: 0;
 }
 
@@ -5948,10 +5937,6 @@ ul.errorlist li {
 
 .form-group > ul.errorlist > li {
     color: #C53F3F;
-}
-
-.operation-column {
-    width: 140px
 }
 
 .messages {
