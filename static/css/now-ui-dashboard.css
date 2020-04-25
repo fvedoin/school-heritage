@@ -5953,3 +5953,10 @@ ul.errorlist li {
 .operation-column {
     width: 140px
 }
+
+.messages {
+    display: flex;
+    justify-items: center;
+    justify-content: space-between;
+    align-items: center;
+}
