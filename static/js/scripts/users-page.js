@@ -2,6 +2,7 @@ $(".telefone").mask("(00) 0000-00009");
 $(document).ready(function () {
     $('#btn-close-div-form-user').click(function () {
         $('#div-form-user').hide();
+        $('.messages').hide();
         $('#div-list-users').show();
     });
     $('#btn-show-div-form-user').click(function () {
@@ -53,24 +54,5 @@ $(document).ready(function () {
     });
     inputSearch.on('keyup', function () {
         search();
-    });
-    $('.btn-delete-user').on('click', function (e) {
-        e.preventDefault();
-        $('#div-messages-delete-user').hide();
-        var tr = $(this).parent().parent();
-        $.get($(this).attr('href'), function (data) {
-            if (data.success) {
-                var html = '  <div class="alert alert-success alert-dismissible fade show" role="alert">' +
-                    '                            <span>' + data.message + '</span>' +
-                    '                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                    '                                <span aria-hidden="true">&times;</span>' +
-                    '                            </button>' +
-                    '                        </div>';
-                $('#div-messages-delete-user').html(html);
-                $('#div-messages-delete-user').show('slow');
-                tableDt.row(tr).remove().draw(false);
-            }
-        }, "json");
-        return false;
     });
 });
