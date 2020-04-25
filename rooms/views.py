@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+from users.decorators import schoolmaster_required
 from .models import Room
 from .forms import RoomForm
 
 @login_required
+@schoolmaster_required
 def index(request):
     rooms = Room.objects.all()
     template_name = 'rooms/index.html'

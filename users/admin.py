@@ -1,15 +1,15 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth import get_user_model
 from django.contrib.admin.sites import AdminSite
 
-from .forms import CustomUserCreationForm, CustomUserChangeForm, CustomUserAdminAuthenticationForm
-from .models import CustomUser
+from .forms import UserAdminAuthenticationForm
+
+User = get_user_model()
 
 
-class CustomUserAdmin(UserAdmin):
-    add_form = CustomUserCreationForm
-    form = CustomUserChangeForm
-    model = CustomUser
+class NewUserAdmin(UserAdmin):
+    model = User
     list_display = ('email', 'role', 'is_active',)
     list_filter = ('role', 'is_active',)
     fieldsets = (
@@ -26,8 +26,8 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('email',)
 
 
-class CustomUserAdminSite(AdminSite):
-    login_form = CustomUserAdminAuthenticationForm
+class UserAdminSite(AdminSite):
+    login_form = UserAdminAuthenticationForm
 
     def has_permission(self, request):
         """
@@ -37,5 +37,5 @@ class CustomUserAdminSite(AdminSite):
         return request.user.is_active and request.user.role == 1
 
 
-admin_site_classe = CustomUserAdminSite()
-admin_site_classe.register(CustomUser, CustomUserAdmin)
+admin_site_classe = UserAdminSite()
+admin_site_classe.register(User, NewUserAdmin)

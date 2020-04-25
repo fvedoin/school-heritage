@@ -1,0 +1,254 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load users_filters %}
+
+{% block css %}
+    <link href="{% static 'css/jquery.dataTables.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block title %}
+    USUÁRIOS
+{% endblock %}
+
+{% block content %}
+    <div class="row" id="div-form-user" {% if post is False %}style="display: none"{% endif %}>
+        <div class="col-md-10 ml-auto mr-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">
+                        Adicionar usuário
+                        <button class="btn btn-sm btn-outline-primary" id="btn-close-div-form-user">
+                            <i class="fas fa-times"></i> Fechar
+                        </button>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mr-auto ml-auto mb-2">
+                            {% if messages %}
+                                <div class="messages">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        {% for message in messages %}
+                                            <span>{{ message }}</span>
+                                        {% endfor %}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="id_{{ form.name.name }}">
+                                        {{ form.name.label }}
+                                    </label>
+                                    {{ form.name }}
+                                    {{ form.name.errors }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_{{ form.email.name }}">
+                                        {{ form.email.label }}
+                                    </label>
+                                    {{ form.email }}
+                                    {{ form.email.errors }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_{{ form.phone.name }}">
+                                        {{ form.phone.label }}
+                                    </label>
+                                    {{ form.phone }}
+                                    {{ form.phone.errors }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_{{ form.role.name }}">
+                                        {{ form.role.label }}
+                                    </label>
+                                    {{ form.role }}
+                                    {{ form.role.errors }}
+                                </div>
+                                <div class="form-check">
+                                    {{ form.is_active }}
+                                    <label for="id_{{ form.is_active.name }}" class="form-check-label">
+                                        {{ form.is_active.label }}
+                                    </label>
+                                    {{ form.is_active.errors }}
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mr-auto ml-auto">
+                                        <button type="submit" class="btn btn-primary btn-block">Salvar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="div-list-users" {% if post %}style="display: none"{% endif %}>
+        <div class="col-md-10 ml-auto mr-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">
+                        Lista de usuários
+                        <button class="btn btn-sm btn-outline-primary" id="btn-show-div-form-user">
+                            <i class="fas fa-plus-square"></i> Adicionar usuário
+                        </button>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="messages" id="div-messages-delete-user" style="display: none"></div>
+                    <div class="row">
+                        <div class="col-4 col-md-3">
+                            <input type="search" class="form-control" placeholder="Procurar..." id="inputSearch">
+                        </div>
+                        <div class="col-4 col-md-3">
+                            <select id="inputRole" class="form-control d-none d-sm-block">
+                                <option value="">Todos cargos</option>
+                                <option value="Aluno">Aluno</option>
+                                <option value="Diretor">Diretor</option>
+                                <option value="Professor">Professor</option>
+                            </select>
+                        </div>
+                        <div class="col-4 col-md-3">
+                            <select id="inputActive" class="form-control d-none d-sm-block">
+                                <option value="">Todas situações</option>
+                                <option value="Sim">Ativo</option>
+                                <option value="Não">Não ativo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table" id="table-users">
+                            <thead class=" text-primary">
+                            <tr>
+                                <th>Nome</th>
+                                <th class="d-none d-sm-table-cell">E-mail</th>
+                                <th class="d-none d-sm-table-cell">Cargo</th>
+                                <th class="d-none d-sm-table-cell">Telefone</th>
+                                <th class="d-none d-sm-table-cell">Ativo</th>
+                                <th class="operation-column text-center">
+                                    Operações
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for user in users %}
+                                <tr id="{{ user.pk }}">
+                                    <td>
+                                        {{ user.name|title }}
+                                    </td>
+                                    <td class="d-none d-sm-table-cell">
+                                        {{ user.email|lower }}
+                                    </td>
+                                    <td class="d-none d-sm-table-cell">
+                                        {{ user.role|get_role|capfirst }}
+                                    </td>
+                                    <td class="d-none d-sm-table-cell">
+                                        {{ user.phone }}
+                                    </td>
+                                    <td class="d-none d-sm-table-cell">
+                                        {{ user.is_active|yesno|capfirst }}
+                                    </td>
+                                    <td class="text-right text-center">
+                                        <a href="{% url 'users:edit' user.pk %}" class="btn btn-warning btn-icon">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="{% url 'users:delete' user.pk %}" class="btn btn-danger btn-icon btn-delete-user">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'js/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'js/plugins/jquery.mask.min.js' %}"></script>
+    <script type="text/javascript">
+        $(".telefone").mask("(00) 0000-00009");
+        $(document).ready(function () {
+            $('#btn-close-div-form-user').click(function () {
+                $('#div-form-user').hide();
+                $('#div-list-users').show();
+            });
+            $('#btn-show-div-form-user').click(function () {
+                $('#div-form-user').show();
+                $('.messages').hide();
+                $('#div-list-users').hide();
+            });
+            var tableDt = $('#table-users').DataTable({
+                sDom: 'lrtip',
+                "pageLength": 10,
+                "lengthChange": false,
+                "info": true,
+                "columnDefs": [
+                    {"orderable": false, "searchable": false, "targets": [5]},
+                    {"orderable": false, "targets": [2, 3, 4]}
+                ]
+            });
+            var inputSearch = $('#inputSearch');
+
+            function restartSearch() {
+                tableDt.search(inputSearch.val()).columns().search('').draw();
+            }
+
+            function search() {
+                restartSearch();
+                var valueActive = $("#inputActive").val();
+                if (valueActive != "") {
+                    tableDt.columns(4).search(valueActive).draw();
+                }
+                var valueRole = $("#inputRole").val();
+                if (valueRole != "") {
+                    tableDt.columns(2).search(valueRole).draw();
+                }
+                var textSearch = inputSearch.val();
+                if (textSearch != "") {
+                    tableDt.search(textSearch).draw();
+                }
+
+                if (valueRole == "" && valueActive == "" && textSearch == "") {
+                    restartSearch();
+                }
+            }
+
+            $('#inputRole').change(function () {
+                search();
+            });
+            $('#inputActive').change(function () {
+                search();
+            });
+            inputSearch.on('keyup', function () {
+                search();
+            });
+            $('.btn-delete-user').on('click', function (e) {
+                e.preventDefault();
+                $('#div-messages-delete-user').hide();
+                var tr = $(this).parent().parent();
+                $.get($(this).attr('href'), function (data) {
+                    if (data.success) {
+                        var html = '  <div class="alert alert-success alert-dismissible fade show" role="alert">' +
+                            '                            <span>' + data.message + '</span>' +
+                            '                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                            '                                <span aria-hidden="true">&times;</span>' +
+                            '                            </button>' +
+                            '                        </div>';
+                        $('#div-messages-delete-user').html(html);
+                        $('#div-messages-delete-user').show('slow');
+                        tableDt.row(tr).remove().draw(false);
+                    }
+                }, "json");
+                return false;
+            });
+        });
+    </script>
+{% endblock %}
