@@ -22,8 +22,9 @@ $(document).ready(function () {
         'lengthChange': false,
         'info': true,
         'columnDefs': [
-            { 'targets': 0, 'orderable': true },
-            { 'targets': 1, 'orderable': false, 'searchable': false, 'width': '100px', 'className': 'operation-column' }
+            { 'targets': 0, 'orderable': true},
+            { 'targets': 1, 'orderable': false },
+            { 'targets': 2, 'orderable': false, 'searchable': false, 'width': '100px', 'className': 'operation-column' }
         ]
     });
 

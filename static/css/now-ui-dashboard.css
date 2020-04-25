@@ -5945,3 +5945,12 @@ ul.errorlist li {
     justify-content: space-between;
     align-items: center;
 }
+
+.operation-column {
+    text-align: center;
+}
+
+table.dataTable > thead > tr > th:last-child {
+    text-align: center;
+    padding-right: 5px;
+}
