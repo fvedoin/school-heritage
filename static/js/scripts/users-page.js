@@ -1,26 +1,29 @@
 $(".telefone").mask("(00) 0000-00009");
 $(document).ready(function () {
+    $('#div-form-user').hide();
+
     $('#btn-close-div-form-user').click(function () {
         $('#div-form-user').hide();
-        $('.messages').hide();
         $('#div-list-users').show();
     });
     $('#btn-show-div-form-user').click(function () {
         $('#div-form-user').show();
-        $('.messages').hide();
         $('#div-list-users').hide();
     });
-    var tableDt = $('#table-users').DataTable({
+
+    var tableDt = $('#dt').DataTable({
         sDom: 'lrtip',
         "pageLength": 10,
+        'autoWidth': false,
         "lengthChange": false,
         "info": true,
         "columnDefs": [
-            {"orderable": false, "searchable": false, "targets": [5]},
+            {"orderable": false, "searchable": false, "targets": 5, 'width': '73px'},
             {"orderable": false, "targets": [2, 3, 4]}
         ]
     });
-    var inputSearch = $('#inputSearch');
+
+    const inputSearch = $('#inputSearch');
 
     function restartSearch() {
         tableDt.search(inputSearch.val()).columns().search('').draw();

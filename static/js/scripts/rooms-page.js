@@ -20,10 +20,11 @@ $(document).ready(function () {
         sDom: 'lrtip',
         'pageLength': 10,
         'lengthChange': false,
+        'autoWidth': false,
         'info': true,
         'columnDefs': [
             { 'targets': 0, 'orderable': true },
-            { 'targets': 1, 'orderable': false, 'searchable': false, 'width': '100px', 'className': 'operation-column' }
+            { 'targets': 1, 'orderable': false, 'searchable': false, 'width': '73px', 'className': 'operation-column' }
         ]
     });
 
