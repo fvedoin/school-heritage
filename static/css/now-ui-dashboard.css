@@ -5950,7 +5950,16 @@ ul.errorlist li {
     text-align: center;
 }
 
-table.dataTable > thead > tr > th:last-child {
+table#dt > thead > tr > th:last-child {
     text-align: center;
     padding-right: 5px;
+}
+
+table#dt > tbody > tr > td:last-child {
+    display: flex;
+    justify-content: center;
+}
+
+table#dt > tbody > tr > td:last-child > a{
+    margin-right: 5px;
 }
