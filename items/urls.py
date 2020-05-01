@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import index
-from django.contrib.auth import views as auth_views
+from .views import index, ItemEditView
 
 urlpatterns = [
-    path('', index, name='index')
+    path('', index, name='index'),
+    path('<int:pk>/', ItemEditView.as_view(), name='edit'),
 ]
