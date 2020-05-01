@@ -87,12 +87,16 @@
                                         {{ room.name }}
                                     </td>
                                     <td class="text-right text-center">
-                                        <button class="btn btn-warning btn-icon">
+                                        <a href="{% url 'rooms:edit' room.pk %}" class="btn btn-warning btn-icon">
                                             <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-icon">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
+                                        </a>
+                                        <form method="post" action="{% url 'rooms:edit' room.pk %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="_method" value="delete">
+                                            <button type="submit" class="btn btn-danger btn-icon">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             {% endfor %}
