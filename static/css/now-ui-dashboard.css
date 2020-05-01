@@ -5955,12 +5955,12 @@ table#dt > thead > tr > th:last-child {
     padding-right: 5px;
 }
 
-table#dt > tbody > tr > td:last-child {
+table#dt > tbody > tr > td:last-child:not(.dataTables_empty) {
     display: flex;
     justify-content: center;
 }
 
-table#dt > tbody > tr > td:last-child > a{
+table#dt > tbody > tr > td:last-child:not(.dataTables_empty) > a{
     margin-right: 5px;
 }
 

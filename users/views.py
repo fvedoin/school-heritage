@@ -51,7 +51,6 @@ class UserIndexView(View):
         users = User.objects.exclude(pk=request.user.pk)
         context = {}
         form = UserCreateForm()
-        context['post'] = False
         context['form'] = form
         context['users'] = users
         return render(request, self.template_name, context)
@@ -65,7 +64,6 @@ class UserIndexView(View):
             messages.success(request, 'Usuário cadastrado com sucesso.')
             messages.success(request, 'Um e-mail foi enviado para ' + user.email + ' com os dados de acesso.')
         users = User.objects.exclude(pk=request.user.pk)
-        context['post'] = True
         context['form'] = form
         context['users'] = users
         return render(request, self.template_name, context)
