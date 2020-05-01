@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'items',
     'rooms',
     'users',
+    'problems',
 ]
 
 MIDDLEWARE = [
