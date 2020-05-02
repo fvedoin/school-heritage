@@ -28,13 +28,16 @@
                             {% endif %}
                             <form method="post">
                                 {% csrf_token %}
-                                <input type="hidden" name="usuario" value="{{ user }}">
                                 {% for field in form %}
-                                    <div class="pure-control-group">
+                                    {% if field.is_hidden %}
+                                        {{ field }}
+                                    {% else %}
+                                        <div class="pure-control-group">
                                         {{ field.label_tag }}
                                         {{ field }}
                                         {{ field.errors }}
-                                    </div>
+                                        </div>
+                                    {% endif %}
                                 {% endfor %}
                                 <div class="row">
                                     <div class="col-md-4"></div>
@@ -83,12 +86,16 @@
                                         {{ problem.description }}
                                     </td>
                                     <td class="text-right text-center">
-                                        <button class="btn btn-warning btn-icon">
+                                        <a href="{% url 'problems:edit' problem.pk %}" class="btn btn-warning btn-icon">
                                             <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-icon">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
+                                        </a>
+                                        <form method="post" action="{% url 'problems:edit' problem.pk %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="_method" value="delete">
+                                            <button type="submit" class="btn btn-danger btn-icon">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             {% endfor %}

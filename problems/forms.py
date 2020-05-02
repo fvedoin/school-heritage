@@ -7,7 +7,8 @@ class ProblemForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['description'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Digite a descrição do problema'})
         self.fields['item'].widget.attrs.update({'class': 'form-control'})
+        self.fields['usuario'].widget = forms.HiddenInput()
 
     class Meta:
         model = Problem
-        fields = ['description', 'item']
+        fields = ['description', 'item', 'usuario']
