@@ -1,11 +1,14 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm, PasswordChangeForm
-from django.contrib.auth import password_validation
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from django.contrib.auth import password_validation, get_user_model
 from django.contrib.admin.forms import AdminAuthenticationForm
 from django import forms
-from .models import CustomUser
+from core.utils import generate_password
+from core.mail import send_mail_template
+
+User = get_user_model()
 
 
-class CustomUserAdminAuthenticationForm(AdminAuthenticationForm):
+class UserAdminAuthenticationForm(AdminAuthenticationForm):
     def confirm_login_allowed(self, user):
         if not user.role == 1:
             raise forms.ValidationError(
@@ -15,13 +18,54 @@ class CustomUserAdminAuthenticationForm(AdminAuthenticationForm):
             )
 
 
-class CustomUserCreationForm(UserCreationForm):
-    class Meta(UserCreationForm):
-        model = CustomUser
-        fields = ('email', 'name',)
+class UserCreateForm(forms.ModelForm):
+    def save(self, commit=True):
+        user = super(UserCreateForm, self).save(commit=False)
+        password = generate_password()
+        user.set_password(password)
+        if commit:
+            user.save()
+            template_name = 'users/create_user_mail.html'
+            subject = 'Login no sistema de controle de patrimônio'
+            context = {
+                'user': user,
+                'password': password
+            }
+            send_mail_template(subject, template_name, context, [user.email])
+        return user
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Digite seu nome'})
+        self.fields['email'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Digite seu e-mail'})
+        self.fields['phone'].widget.attrs.update(
+            {'class': 'form-control telefone', 'placeholder': 'Digite seu telefone',
+             'pattern': '\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}'})
+        self.fields['role'].widget.attrs.update({'class': 'form-control'})
+        self.fields['is_active'].widget.attrs.update({'class': 'form-check-input'})
+
+    class Meta:
+        model = User
+        fields = ['email', 'name', 'phone', 'role', 'is_active']
 
 
-class CustomUserChangeForm(forms.ModelForm):
+class UserEditForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Digite seu nome'})
+        self.fields['email'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Digite seu e-mail'})
+        self.fields['phone'].widget.attrs.update(
+            {'class': 'form-control telefone', 'placeholder': 'Digite seu telefone',
+             'pattern': '\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}'})
+        self.fields['role'].widget.attrs.update({'class': 'form-control'})
+        self.fields['is_active'].widget.attrs.update({'class': 'form-check-input'})
+
+    class Meta:
+        model = User
+        fields = ['email', 'name', 'phone', 'role', 'is_active']
+
+
+class UserSessionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Digite seu nome'})
@@ -33,11 +77,11 @@ class CustomUserChangeForm(forms.ModelForm):
             self.fields['name'].widget.attrs.update({'readonly': 'true'})
 
     class Meta:
-        model = CustomUser
+        model = User
         fields = ['email', 'name', 'phone']
 
 
-class CustomUserAuthenticationForm(AuthenticationForm):
+class UserAuthenticationForm(AuthenticationForm):
     username = forms.EmailField(
         widget=forms.EmailInput(attrs={'autofocus': True, 'class': 'form-control', 'placeholder': 'Digite seu e-mail'}))
     password = forms.CharField(
@@ -47,12 +91,12 @@ class CustomUserAuthenticationForm(AuthenticationForm):
     )
 
     error_messages = {
-        'invalid_login': 'Informe e-mail e senha válidos',
-        'inactive': 'Usuário inativo',
+        'invalid_login': 'Informe e-mail e senha válidos.',
+        'inactive': 'Usuário inativo.',
     }
 
 
-class CustomUserPasswordChangeForm(PasswordChangeForm):
+class UserPasswordChangeForm(PasswordChangeForm):
     old_password = forms.CharField(
         label='Senha antiga',
         strip=False,

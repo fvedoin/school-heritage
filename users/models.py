@@ -15,10 +15,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     )
 
     email = models.EmailField('E-mail', unique=True)
-    name = models.CharField('Nome', max_length=80)
+    name = models.CharField('Nome', max_length=80, unique=True)
     phone = models.CharField('Telefone', max_length=20)
     role = models.IntegerField('Cargo', choices=ROLE_CHOICES)
-    is_active = models.BooleanField('Está ativo?', default=True)
+    is_active = models.BooleanField('Ativo', default=True)
     date_joined = models.DateTimeField(default=timezone.now)
 
     USERNAME_FIELD = 'email'

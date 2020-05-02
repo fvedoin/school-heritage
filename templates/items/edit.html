@@ -1,0 +1,58 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}
+    ITENS
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-10 ml-auto mr-auto">
+            {% include 'layouts/alert.html' %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 ml-auto mr-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">
+                        Editar item
+                        <a href="{% url 'items:index' %}" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </a>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mr-auto ml-auto mb-2">
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="_method" value="put">
+                                {% for field in form %}
+                                    <div class="pure-control-group">
+                                        {{ field.label_tag }}
+                                        {{ field }}
+                                        {{ field.errors }}
+                                    </div>
+                                {% endfor %}
+                                <div class="row">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-primary btn-block">Salvar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'js/plugins/jquery.mask.min.js' %}"></script>
+    <script type="text/javascript">
+        $(".telefone").mask("(00) 0000-00009");
+    </script>
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import index
-from django.contrib.auth import views as auth_views
+from .views import index, RoomEditView
 
 urlpatterns = [
-    path('', index, name='index')
+    path('', index, name='index'),
+    path('<int:pk>/', RoomEditView.as_view(), name='edit'),
 ]

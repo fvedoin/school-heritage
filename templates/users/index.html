@@ -1,0 +1,174 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load users_filters %}
+
+{% block css %}
+    <link href="{% static 'css/jquery.dataTables.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block title %}
+    USUÁRIOS
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-10 ml-auto mr-auto">
+            {% include 'layouts/alert.html' %}
+        </div>
+    </div>
+    <div class="row" id="div-form-user">
+        <div class="col-md-10 ml-auto mr-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">
+                        Adicionar usuário
+                        <button class="btn btn-sm btn-outline-primary" id="btn-close-div-form-user">
+                            <i class="fas fa-times"></i> Fechar
+                        </button>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mr-auto ml-auto mb-2">
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="id_{{ form.name.name }}">
+                                        {{ form.name.label }}
+                                    </label>
+                                    {{ form.name }}
+                                    {{ form.name.errors }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_{{ form.email.name }}">
+                                        {{ form.email.label }}
+                                    </label>
+                                    {{ form.email }}
+                                    {{ form.email.errors }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_{{ form.phone.name }}">
+                                        {{ form.phone.label }}
+                                    </label>
+                                    {{ form.phone }}
+                                    {{ form.phone.errors }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_{{ form.role.name }}">
+                                        {{ form.role.label }}
+                                    </label>
+                                    {{ form.role }}
+                                    {{ form.role.errors }}
+                                </div>
+                                <div class="form-check">
+                                    {{ form.is_active }}
+                                    <label for="id_{{ form.is_active.name }}" class="form-check-label">
+                                        {{ form.is_active.label }}
+                                    </label>
+                                    {{ form.is_active.errors }}
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mr-auto ml-auto">
+                                        <button type="submit" class="btn btn-primary btn-block">Salvar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="div-list-users">
+        <div class="col-md-10 ml-auto mr-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">
+                        Lista de usuários
+                        <button class="btn btn-sm btn-outline-primary" id="btn-show-div-form-user">
+                            <i class="fas fa-plus-square"></i> Adicionar usuário
+                        </button>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="messages" id="div-messages-delete-user" style="display: none"></div>
+                    <div class="row">
+                        <div class="col-4 col-md-3">
+                            <input type="search" class="form-control" placeholder="Procurar..." id="inputSearch">
+                        </div>
+                        <div class="col-4 col-md-3">
+                            <select id="inputRole" class="form-control d-none d-sm-block">
+                                <option value="">Todos cargos</option>
+                                <option value="Aluno">Aluno</option>
+                                <option value="Diretor">Diretor</option>
+                                <option value="Professor">Professor</option>
+                            </select>
+                        </div>
+                        <div class="col-4 col-md-3">
+                            <select id="inputActive" class="form-control d-none d-sm-block">
+                                <option value="">Todas situações</option>
+                                <option value="Sim">Ativo</option>
+                                <option value="Não">Não ativo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table" id="dt">
+                            <thead class=" text-primary">
+                            <tr>
+                                <th>Nome</th>
+                                <th class="d-none d-sm-table-cell">E-mail</th>
+                                <th class="d-none d-sm-table-cell">Cargo</th>
+                                <th class="d-none d-sm-table-cell">Telefone</th>
+                                <th class="d-none d-sm-table-cell">Ativo</th>
+                                <th class="operation-column text-center">
+                                    <i class="fas fa-cogs"></i>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for user in users %}
+                                <tr id="{{ user.pk }}">
+                                    <td>
+                                        {{ user.name|title }}
+                                    </td>
+                                    <td class="d-none d-sm-table-cell">
+                                        {{ user.email|lower }}
+                                    </td>
+                                    <td class="d-none d-sm-table-cell">
+                                        {{ user.role|get_role|capfirst }}
+                                    </td>
+                                    <td class="d-none d-sm-table-cell">
+                                        {{ user.phone }}
+                                    </td>
+                                    <td class="d-none d-sm-table-cell">
+                                        {{ user.is_active|yesno|capfirst }}
+                                    </td>
+                                    <td class="text-right text-center">
+                                        <a href="{% url 'users:edit' user.pk %}" class="btn btn-sm btn-warning btn-icon">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <form method="post" action="{% url 'users:edit' user.pk %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="_method" value="delete">
+                                            <button type="submit" class="btn btn-sm btn-danger btn-icon">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'js/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'js/plugins/jquery.mask.min.js' %}"></script>
+    <script src="{% static 'js/scripts/users-page.js' %}"></script>
+{% endblock %}

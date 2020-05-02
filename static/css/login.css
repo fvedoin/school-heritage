@@ -6007,11 +6007,16 @@ ul.errorlist {
     margin: 0;
     padding: 0;
 }
+
 ul.errorlist li {
     display: block;
     margin: 0.3em 0;
     border: none;
     padding: 0;
+}
+
+.form-group > ul.errorlist > li {
+    color: #C53F3F;
 }
 
 /*# sourceMappingURL=dashboard-free.css.map */
