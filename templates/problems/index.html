@@ -1,4 +1,9 @@
 {% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'css/jquery.dataTables.css' %}" rel="stylesheet"/>
+{% endblock %}
 
 {% block title %}
     PROBLEMAS
@@ -7,11 +12,16 @@
 {% block content %}
     <div class="row">
         <div class="col-md-10 ml-auto mr-auto">
+            {% include 'layouts/alert.html' %}
+        </div>
+    </div>
+    <div class="row" id="form-create">
+        <div class="col-md-10 ml-auto mr-auto">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">
                         Adicionar problema
-                        <button class="btn btn-sm btn-outline-primary">
+                        <button class="btn btn-sm btn-outline-primary" id="close-form">
                             <i class="fas fa-times"></i> Fechar
                         </button>
                     </h4>
@@ -58,14 +68,19 @@
                 <div class="card-header">
                     <h4 class="card-title">
                         Lista de problemas
-                        <button class="btn btn-sm btn-outline-primary">
+                        <button class="btn btn-sm btn-outline-primary" id="show-form-create">
                             <i class="fas fa-plus-square"></i> Adicionar problema
                         </button>
                     </h4>
                 </div>
                 <div class="card-body">
+                    <div class="row">
+                        <div class="col-4 col-md-3">
+                            <input type="search" class="form-control" placeholder="Procurar..." id="dt-search">
+                        </div>
+                    </div>
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table" id="dt">
                             <thead class=" text-primary">
                             <tr>
                                 <th>
@@ -73,6 +88,9 @@
                                 </th>
                                 <th>
                                     Descrição
+                                </th>
+                                <th>
+                                    <i class="fas fa-cogs"></i>
                                 </th>
                             </tr>
                             </thead>
@@ -106,4 +124,11 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'js/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'js/plugins/jquery.mask.min.js' %}"></script>
+    <script src="{% static 'js/utils/indexInitialDisplay.js' %}"></script>
+    <script src="{% static 'js/scripts/items-page.js' %}"></script>
 {% endblock %}

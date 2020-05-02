@@ -2,26 +2,25 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.views.generic import View
 #from users.decorators import schoolmaster_required
+from django.views.generic import View
+
 from .models import Problem
 from .forms import ProblemForm
 
 @login_required
-#@schoolmaster_required
 def index(request):
     problems = Problem.objects.all()
     template_name = 'problems/index.html'
     context = {}
     form = ProblemForm(request.POST or None)
     if form.is_valid():
-        #form['usuario_id'] = request.POST['usuario']
         form.save()
         form = ProblemForm()
         messages.success(request, 'Problema inserido com sucesso!')
     context['problems'] = problems
     context['form'] = form
-    context['form'].fields['usuario'].initial = request.user.id
+    context['form'].fields['user'].initial = request.user.id
     
     return render(request, template_name, context)
 

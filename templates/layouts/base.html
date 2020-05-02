@@ -41,7 +41,7 @@
                 </li>
                 {% if request.user.role == 1 %}
                     <li>
-                        <a href="#">
+                        <a href="{% url 'problems:index' %}">
                             <i class="fas fa-exclamation-triangle"></i>
                             <p>Problemas</p>
                         </a>

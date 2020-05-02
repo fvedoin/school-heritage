@@ -12,7 +12,7 @@ class Problem(models.Model):
         Item, verbose_name='Item',
         on_delete=models.CASCADE
     )
-    usuario = models.ForeignKey(
+    user = models.ForeignKey(
     		CustomUser, verbose_name='Usuario',
     		on_delete=models.CASCADE
     )

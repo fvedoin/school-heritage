@@ -8,7 +8,7 @@
 {% block content %}
     <div class="row">
         <div class="col-md-10 ml-auto mr-auto">
-            <!-- {% include 'layouts/alert.html' %} -->
+            {% include 'layouts/alert.html' %}
         </div>
     </div>
     <div class="row">
@@ -16,7 +16,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">
-                        Editar sala
+                        Editar problema
                         <a href="{% url 'problems:index' %}" class="btn btn-sm btn-outline-primary">
                             <i class="fas fa-arrow-left"></i> Voltar
                         </a>
@@ -29,11 +29,15 @@
                                 {% csrf_token %}
                                 <input type="hidden" name="_method" value="put">
                                 {% for field in form %}
-                                    <div class="pure-control-group">
+                                    {% if field.is_hidden %}
+                                        {{ field }}
+                                    {% else %}
+                                        <div class="pure-control-group">
                                         {{ field.label_tag }}
                                         {{ field }}
                                         {{ field.errors }}
-                                    </div>
+                                        </div>
+                                    {% endif %}
                                 {% endfor %}
                                 <div class="row">
                                     <div class="col-md-4"></div>
