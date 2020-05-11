@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-#from users.decorators import schoolmaster_required
+from users.decorators import schoolmaster_required
 from django.views.generic import View
 
 from .models import Problem
@@ -29,7 +29,7 @@ def index(request):
     return render(request, template_name, context)
 
 @method_decorator(login_required, name='dispatch')
-#@method_decorator(schoolmaster_required, name='dispatch')
+@method_decorator(schoolmaster_required, name='dispatch')
 class ProblemEditView(View):
     template_name = 'problems/edit.html'
 

@@ -16,13 +16,13 @@
             {% include 'layouts/alert.html' %}
         </div>
     </div>
-    <div class="row" id="div-form-user">
+    <div class="row" id="form-create">
         <div class="col-md-10 ml-auto mr-auto">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">
                         Adicionar usuário
-                        <button class="btn btn-sm btn-outline-primary" id="btn-close-div-form-user">
+                        <button class="btn btn-sm btn-outline-primary" id="close-form">
                             <i class="fas fa-times"></i> Fechar
                         </button>
                     </h4>
@@ -79,13 +79,13 @@
             </div>
         </div>
     </div>
-    <div class="row" id="div-list-users">
+    <div class="row" id="list">
         <div class="col-md-10 ml-auto mr-auto">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">
                         Lista de usuários
-                        <button class="btn btn-sm btn-outline-primary" id="btn-show-div-form-user">
+                        <button class="btn btn-sm btn-outline-primary" id="show-form-create">
                             <i class="fas fa-plus-square"></i> Adicionar usuário
                         </button>
                     </h4>
@@ -145,7 +145,8 @@
                                         {{ user.is_active|yesno|capfirst }}
                                     </td>
                                     <td class="text-right text-center">
-                                        <a href="{% url 'users:edit' user.pk %}" class="btn btn-sm btn-warning btn-icon">
+                                        <a href="{% url 'users:edit' user.pk %}"
+                                           class="btn btn-sm btn-warning btn-icon">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <form method="post" action="{% url 'users:edit' user.pk %}">
@@ -170,5 +171,6 @@
 {% block script %}
     <script src="{% static 'js/jquery.dataTables.js' %}"></script>
     <script src="{% static 'js/plugins/jquery.mask.min.js' %}"></script>
+    <script src="{% static 'js/utils/indexInitialDisplay.js' %}"></script>
     <script src="{% static 'js/scripts/users-page.js' %}"></script>
 {% endblock %}

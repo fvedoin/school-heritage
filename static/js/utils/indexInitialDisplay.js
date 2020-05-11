@@ -1,5 +1,5 @@
 function setInitialView() {
-//Initially display only the list section
+    //Initially display only the list section
     $('#form-create').hide();
 
     $('#close-form').click(function () {
