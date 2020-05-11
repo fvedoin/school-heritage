@@ -6,6 +6,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import View
 
 from .models import Problem
+from logs.models import Log
 from .forms import ProblemForm
 
 @login_required
@@ -17,6 +18,9 @@ def index(request):
     if form.is_valid():
         form.save()
         form = ProblemForm()
+        problem_id = Problem.objects.latest('id')
+        log = Log(title='Problema criado', description='', problem=problem_id)
+        log.save()
         messages.success(request, 'Problema inserido com sucesso!')
     context['problems'] = problems
     context['form'] = form
@@ -39,9 +43,11 @@ class ProblemEditView(View):
 
     def get(self, request, pk):
         problem = get_object_or_404(Problem, pk=pk)
+        logs = Log.objects.filter(problem=problem.id)
         context = {}
         form = ProblemForm(instance=problem)
         context['form'] = form
+        context['logs'] = logs
         return render(request, self.template_name, context)
 
     def put(self, request, pk):
