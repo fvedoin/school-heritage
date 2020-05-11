@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rooms',
     'users',
     'problems',
+    'logs',
 ]
 
 MIDDLEWARE = [
