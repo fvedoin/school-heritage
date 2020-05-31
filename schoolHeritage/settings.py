@@ -142,5 +142,5 @@ EMAIL_HOST_PASSWORD = ''
 CONTACT_EMAIL = 'ficechin@hotmail.com'
 
 LOGIN_URL = 'users:login'
-LOGIN_REDIRECT_URL = 'core:index'
+LOGIN_REDIRECT_URL = 'items:index'
 LOGOUT_URL = 'users:logout'
