@@ -13,7 +13,8 @@ const dt = $('#dt').DataTable({
     'columnDefs': [
         {'targets': 0, 'orderable': true},
         {'targets': 1, 'orderable': false},
-        {'targets': 2, 'orderable': false, 'searchable': false, 'width': '73px', 'className': 'operation-column'}
+        {'targets': 2, 'orderable': false, 'width': '73px', 'className': 'operation-column'},
+        {'targets': 3, 'orderable': false, 'searchable': false, 'width': '73px', 'className': 'operation-column'}
     ]
 });
 

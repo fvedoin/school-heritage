@@ -86,6 +86,9 @@
                                     Descrição
                                 </th>
                                 <th>
+                                    Problemas
+                                </th>
+                                <th>
                                     <i class="fas fa-cogs"></i>
                                 </th>
                             </tr>
@@ -99,8 +102,16 @@
                                     <td>
                                         {{ item.description }}
                                     </td>
+                                    <td>
+                                        {% if item.problems.all|length > 0 %}
+                                            <i class="fas fa-exclamation-triangle text-danger"></i>
+                                        {% else %}
+                                            <i class="fas fa-check-circle text-success"></i>
+                                        {% endif %}
+                                    </td>
                                     <td class="text-right text-center">
-                                        <a href="{% url 'items:edit' item.pk %}" class="btn btn-sm btn-warning btn-icon">
+                                        <a href="{% url 'items:edit' item.pk %}"
+                                           class="btn btn-sm btn-warning btn-icon">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <form method="post" action="{% url 'items:edit' item.pk %}">
