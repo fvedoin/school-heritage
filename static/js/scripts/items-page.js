@@ -3,6 +3,7 @@ setInitialView();
 //Input for searching
 const searchField = $('#dt-search');
 
+//Counts the number of columns on items table
 function countCols() {
     var colCount = 0;
     $('tr:nth-child(1) td').each(function () {
@@ -15,6 +16,7 @@ function countCols() {
     return colCount;
 }
 
+//Returns the columnDefs configuration depending on the number of columns
 function getColumns() {
     if (countCols() === 4) {
         return [
