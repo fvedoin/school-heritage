@@ -3,6 +3,35 @@ setInitialView();
 //Input for searching
 const searchField = $('#dt-search');
 
+function countCols() {
+    var colCount = 0;
+    $('tr:nth-child(1) td').each(function () {
+        if ($(this).attr('colspan')) {
+            colCount += +$(this).attr('colspan');
+        } else {
+            colCount++;
+        }
+    });
+    return colCount;
+}
+
+function getColumns() {
+    if (countCols() === 4) {
+        return [
+            {'targets': 0, 'orderable': true},
+            {'targets': 1, 'orderable': false},
+            {'targets': 2, 'searchable': false, 'width': '120px', 'className': 'operation-column'},
+            {'targets': 3, 'orderable': false, 'searchable': false, 'width': '73px', 'className': 'operation-column'}
+        ];
+    } else {
+        return [
+            {'targets': 0, 'orderable': true},
+            {'targets': 1, 'orderable': false},
+            {'targets': 2, 'searchable': false, 'width': '120px', 'className': 'operation-column'}
+        ];
+    }
+}
+
 //DataTable configuration
 const dt = $('#dt').DataTable({
     sDom: 'lrtip',
@@ -10,12 +39,7 @@ const dt = $('#dt').DataTable({
     'lengthChange': false,
     'autoWidth': false,
     'info': true,
-    'columnDefs': [
-        {'targets': 0, 'orderable': true},
-        {'targets': 1, 'orderable': false},
-        {'targets': 2, 'orderable': false, 'width': '73px', 'className': 'operation-column'},
-        {'targets': 3, 'orderable': false, 'searchable': false, 'width': '73px', 'className': 'operation-column'}
-    ]
+    'columnDefs': getColumns()
 });
 
 //Clean the filters
