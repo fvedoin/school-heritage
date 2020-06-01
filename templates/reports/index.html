@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block css %}
+    <link href="{% static 'css/jquery-ui.css' %}" rel="stylesheet"/>
 {% endblock %}
 
 {% block title %}
@@ -33,6 +34,16 @@
                                         <option value="periodo">Por período</option>
                                     </select>
                                 </div>
+                                <div id="input-periodo">
+                                    <div class="form-group">
+                                        <label>Data início</label>
+                                        <input type="text" name="dataInicio" class="form-control data">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Data fim</label>
+                                        <input type="text" name="dataFim" class="form-control data">
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-4 mr-auto ml-auto">
                                         <button type="submit" class="btn btn-primary btn-block">Buscar</button>
@@ -48,4 +59,7 @@
 {% endblock %}
 
 {% block script %}
+    <script src="{% static 'js/plugins/jquery.mask.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui.js' %}"></script>
+    <script src="{% static 'js/scripts/reports-page.js' %}"></script>
 {% endblock %}
