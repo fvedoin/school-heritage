@@ -39,13 +39,13 @@
                         <p>Itens</p>
                     </a>
                 </li>
+	            <li>
+                     <a href="{% url 'problems:index' %}">
+                         <i class="fas fa-exclamation-triangle"></i>
+                         <p>Problemas</p>
+                     </a>
+                </li>
                 {% if request.user.role == 1 %}
-                    <li>
-                        <a href="{% url 'problems:index' %}">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <p>Problemas</p>
-                        </a>
-                    </li>
                         <a href="{% url 'rooms:index' %}">
                     <li>
                             <i class="fas fa-thumbtack"></i>
