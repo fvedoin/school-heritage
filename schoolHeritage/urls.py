@@ -9,5 +9,6 @@ urlpatterns = [
     path('salas/', include(('rooms.urls', 'rooms'), 'rooms')),
     path('itens/', include(('items.urls', 'items'), 'items')),
     path('problemas/', include(('problems.urls', 'problems'), 'problems')),
-
+    path('logs/', include(('logs.urls', 'logs'), 'logs')),
+    path('searchableselect/', include('searchableselect.urls')),
 ]

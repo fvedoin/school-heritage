@@ -54,99 +54,14 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">
-                        Lista de logs
-                        <button class="btn btn-sm btn-outline-primary show-hide-log-form" id="button-adicionar">
-                            <i class="fas fa-plus-square"></i>Adicionar log
-                        </button>
-                        <button class="btn btn-sm btn-outline-primary show-hide-log-form" id="button-fechar" style="display: none">
-                            <i class="fas fa-minus-square"></i> Fechar
-                        </button>
-                    </h4>
-                </div>
-                <div class="card-body">
-                    <div class="row" id="log-form" style="display: none">
-                        <div class="col-md-6 mr-auto ml-auto mb-2">
-                            <form method="post">
-                                {% csrf_token %}
-                                {% for field in log_form %}
-                                    {% if field.is_hidden %}
-                                        {{ field }}
-                                    {% else %}
-                                        <div class="pure-control-group">
-                                        {{ field.label_tag }}
-                                        {{ field }}
-                                        {{ field.errors }}
-                                        </div>
-                                    {% endif %}
-                                {% endfor %}
-                                <div class="row">
-                                    <div class="col-md-4"></div>
-                                    <div class="col-md-4">
-                                        <button type="submit" class="btn btn-primary btn-block">Salvar</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4 col-md-3">
-                            <input type="search" class="form-control" placeholder="Procurar..." id="dt-search">
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table" id="dt">
-                            <thead class=" text-primary">
-                            <tr>
-                                <th>
-                                    Título
-                                </th>
-                                <th>
-                                    Descrição
-                                </th>
-                                <th>
-                                    <i class="fas fa-cogs"></i>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for log in logs %}
-                                <tr>
-                                    <td>
-                                        {{ log.title }}
-                                    </td>
-                                    <td>
-                                        {{ log.description }}
-                                    </td>
-                                    <td class="text-right text-center">
-                                        <a href="" class="btn btn-warning btn-icon">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <form method="post" action="">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="_method" value="delete">
-                                            <button type="submit" class="btn btn-danger btn-icon">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'js/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'js/plugins/jquery.dataTables.js' %}"></script>
     <script src="{% static 'js/utils/indexInitialDisplay.js' %}"></script>
-    <script src="{% static 'js/scripts/items-page.js' %}"></script>
+    <script src="{% static 'js/scripts/problems-page.js' %}"></script>
     <script type="text/javascript">
         $('.show-hide-log-form').click(function () {
             if($('#log-form').is(':visible')){
