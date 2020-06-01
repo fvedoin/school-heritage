@@ -8,10 +8,14 @@ from django.views.generic import View
 from .models import Problem
 from logs.models import Log
 from .forms import ProblemForm
+from logs.forms import LogForm
 
 @login_required
 def index(request):
-    problems = Problem.objects.all()
+    if request.user.role != 1:
+        problems = Problem.objects.filter(user_id=request.user.id)
+    else:
+        problems = Problem.objects.all()
     template_name = 'problems/index.html'
     context = {}
     form = ProblemForm(request.POST or None)
@@ -22,6 +26,9 @@ def index(request):
         log = Log(title='Problema criado', description='', problem=problem_id)
         log.save()
         messages.success(request, 'Problema inserido com sucesso!')
+    for problem in problems:
+        log = Log.objects.filter(problem=problem.pk).earliest('date')
+        problem.date = log.date
     context['problems'] = problems
     context['form'] = form
     context['form'].fields['user'].initial = request.user.id
@@ -43,11 +50,9 @@ class ProblemEditView(View):
 
     def get(self, request, pk):
         problem = get_object_or_404(Problem, pk=pk)
-        logs = Log.objects.filter(problem=problem.id)
         context = {}
         form = ProblemForm(instance=problem)
         context['form'] = form
-        context['logs'] = logs
         return render(request, self.template_name, context)
 
     def put(self, request, pk):

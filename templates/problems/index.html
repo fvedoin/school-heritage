@@ -1,8 +1,9 @@
-{% extends 'layouts/base.html' %}
+'{% extends 'layouts/base.html' %}
 {% load static %}
 
 {% block css %}
     <link href="{% static 'css/jquery.dataTables.css' %}" rel="stylesheet"/>
+	<link href="{% static 'css/bootstrap-select.css' %}" rel="stylesheet"/>
 {% endblock %}
 
 {% block title %}
@@ -76,38 +77,37 @@
                         <table class="table" id="dt">
                             <thead class=" text-primary">
                             <tr>
-                                <th>
-                                    Item
-                                </th>
-                                <th>
-                                    Descrição
-                                </th>
-                                <th>
-                                    <i class="fas fa-cogs"></i>
-                                </th>
+                                <th>Item</th>
+                                <th>Descrição</th>
+                                <th>Data</th>
+	                            {% if request.user.role == 1 %}
+                                    <th><i class="fas fa-cogs"></i></th>
+	                            {% endif %}
                             </tr>
                             </thead>
                             <tbody>
                             {% for problem in problems %}
                                 <tr>
-                                    <td>
-                                        {{ problem.item }}
-                                    </td>
-                                    <td>
-                                        {{ problem.description }}
-                                    </td>
-                                    <td class="text-right text-center">
-                                        <a href="{% url 'problems:edit' problem.pk %}" class="btn btn-warning btn-icon">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <form method="post" action="{% url 'problems:edit' problem.pk %}">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="_method" value="delete">
-                                            <button type="submit" class="btn btn-danger btn-icon">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </form>
-                                    </td>
+                                    <td>{{ problem.item }}</td>
+                                    <td>{{ problem.description }}</td>
+                                    <td>{{ problem.date }}</td>
+	                                {% if request.user.role == 1 %}
+	                                    <td class="text-right text-center">
+	                                        <a href="{% url 'logs:index' problem.pk %}" class="btn btn-info btn-icon">
+	                                            <i class="fas fa-search"></i>
+	                                        </a>
+	                                        <a href="{% url 'problems:edit' problem.pk %}" class="btn btn-warning btn-icon">
+	                                            <i class="fas fa-edit"></i>
+	                                        </a>
+	                                        <form method="post" action="{% url 'problems:edit' problem.pk %}">
+	                                            {% csrf_token %}
+	                                            <input type="hidden" name="_method" value="delete">
+	                                            <button type="submit" class="btn btn-danger btn-icon">
+	                                                <i class="fas fa-trash-alt"></i>
+	                                            </button>
+	                                        </form>
+	                                    </td>
+                                    {% endif %}
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -120,8 +120,9 @@
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'js/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'js/plugins/jquery.dataTables.js' %}"></script>
     <script src="{% static 'js/plugins/jquery.mask.min.js' %}"></script>
     <script src="{% static 'js/utils/indexInitialDisplay.js' %}"></script>
     <script src="{% static 'js/scripts/problems-page.js' %}"></script>
+	<script src="{% static 'js/plugins/bootstrap-select.js' %}"></script>
 {% endblock %}

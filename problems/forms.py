@@ -6,7 +6,7 @@ class ProblemForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['description'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Digite a descrição do problema'})
-        self.fields['item'].widget.attrs.update({'class': 'form-control'})
+        self.fields['item'].widget.attrs.update({'class': 'form-control selectpicker bootstrap-select', 'data-live-search': 'true'})
         self.fields['user'].widget = forms.HiddenInput()
 
     class Meta:
