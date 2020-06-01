@@ -1,0 +1,120 @@
+'{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'css/jquery.dataTables.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block title %}
+	EVENTOS
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-10 ml-auto mr-auto">
+            {% include 'layouts/alert.html' %}
+        </div>
+    </div>
+    <div class="row" id="form-create">
+        <div class="col-md-10 ml-auto mr-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">
+                        Adicionar evento
+                        <button class="btn btn-sm btn-outline-primary" id="close-form">
+                            <i class="fas fa-times"></i> Fechar
+                        </button>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mr-auto ml-auto mb-2">
+                            <form method="post">
+                                {% csrf_token %}
+                                {% for field in form %}
+                                    {% if field.is_hidden %}
+                                        {{ field }}
+                                    {% else %}
+                                        <div class="pure-control-group">
+                                        {{ field.label_tag }}
+                                        {{ field }}
+                                        {{ field.errors }}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                                <div class="row">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-primary btn-block">Salvar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="list">
+        <div class="col-md-10 ml-auto mr-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">
+                        Lista de eventos
+                        <button class="btn btn-sm btn-outline-primary" id="show-form-create">
+                            <i class="fas fa-plus-square"></i> Adicionar evento
+                        </button>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4 col-md-3">
+                            <input type="search" class="form-control" placeholder="Procurar..." id="dt-search">
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table" id="dt">
+                            <thead class=" text-primary">
+                            <tr>
+                                <th>
+                                    Título
+                                </th>
+                                <th>
+                                    Descrição
+                                </th>
+	                            <th>Data</th>
+	                            <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for log in logs %}
+                                <tr>
+                                    <td>
+                                        {{ log.title }}
+                                    </td>
+                                    <td>
+                                        {{ log.description }}
+                                    </td>
+	                                <td>{{ log.date }}</td>
+                                    <td class="text-right text-center">
+                                        <a href="{% url 'logs:edit' log.pk %}" class="btn btn-warning btn-icon">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'js/plugins/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'js/plugins/jquery.mask.min.js' %}"></script>
+    <script src="{% static 'js/utils/indexInitialDisplay.js' %}"></script>
+    <script src="{% static 'js/scripts/logs-page.js' %}"></script>
+{% endblock %}
