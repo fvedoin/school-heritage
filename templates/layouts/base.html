@@ -46,8 +46,8 @@
                             <p>Problemas</p>
                         </a>
                     </li>
-                        <a href="{% url 'rooms:index' %}">
                     <li>
+                        <a href="{% url 'rooms:index' %}">
                             <i class="fas fa-thumbtack"></i>
                             <p>Salas</p>
                         </a>
@@ -56,6 +56,12 @@
                         <a href="{% url 'users:index' %}">
                             <i class="fas fa-users"></i>
                             <p>Usuários</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'reports:index' %}">
+                            <i class="fas fa-file-alt"></i>
+                            <p>Relatório de patrimônio</p>
                         </a>
                     </li>
                 {% endif %}
@@ -76,7 +82,8 @@
                     </div>
                     <a class="navbar-brand" href="#">{% block title %}{% endblock %}</a>
                 </div>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
+                        aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-bar navbar-kebab"></span>
                     <span class="navbar-toggler-bar navbar-kebab"></span>
                     <span class="navbar-toggler-bar navbar-kebab"></span>

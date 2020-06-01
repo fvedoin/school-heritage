@@ -1,0 +1,51 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block css %}
+{% endblock %}
+
+{% block title %}
+    RELATÓRIO DE PATRIMÔNIO
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-10 ml-auto mr-auto">
+            {% include 'layouts/alert.html' %}
+        </div>
+    </div>
+    <div class="row" id="form-create">
+        <div class="col-md-10 ml-auto mr-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">
+                        Informe os filtros
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mr-auto ml-auto mb-2">
+                            <form method="get">
+                                <div class="form-group">
+                                    <label for="filtro">Tipo</label>
+                                    <select id="filtro" class="form-control" name="filtro">
+                                        <option value="atual">Situação atual</option>
+                                        <option value="periodo">Por período</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mr-auto ml-auto">
+                                        <button type="submit" class="btn btn-primary btn-block">Buscar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}
