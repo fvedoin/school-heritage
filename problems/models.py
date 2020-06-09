@@ -10,7 +10,7 @@ class Problem(models.Model):
     )
     item = models.ForeignKey(
         Item, verbose_name='Item',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE, related_name='problems'
     )
     user = models.ForeignKey(
     		CustomUser, verbose_name='Usuario',
