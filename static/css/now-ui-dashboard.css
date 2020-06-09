@@ -5985,3 +5985,7 @@ table#dt > tbody > tr > td:last-child:not(.dataTables_empty) > a {
     margin-inline-end: 0px;
     padding-inline-start: 40px;
 }
+
+.messages {
+    background: #d4edda !important;
+}
