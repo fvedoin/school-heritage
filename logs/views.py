@@ -5,7 +5,8 @@ from django.utils.decorators import method_decorator
 from users.decorators import schoolmaster_required
 from django.views.generic import View
 
-from .models import Problem
+from items.models import Item
+from problems.models import Problem
 from logs.models import Log
 
 from logs.forms import LogForm
@@ -21,6 +22,10 @@ def index(request, pk):
         form.save()
         form = LogForm()
         messages.success(request, 'Evento inserido com sucesso!')
+    problem = Problem.objects.get(pk=pk)
+    #item = Item.objects.get(pk=problem.item_id)
+    context['problem'] = problem
+    context['item'] = Item.objects.get(pk=problem.item_id)
     context['logs'] = logs
     context['form'] = form
     context['form'].fields['problem'].initial = pk
