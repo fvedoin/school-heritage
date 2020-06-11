@@ -18,14 +18,16 @@ function countCols() {
 
 //Returns the columnDefs configuration depending on the number of columns
 function getColumns() {
-    if (countCols() === 4) {
+    if (countCols() === 6) {
         return [
-            {'targets': [0,1,2], 'orderable': true},
-            {'targets': 3, 'orderable': false, 'searchable': false, 'width': '103px', 'className': 'operation-column'}
+            {'targets': 0, 'orderable': false, 'searchable': false},
+            {'targets': [1,2,3,4], 'orderable': true},
+            {'targets': 5, 'orderable': false, 'searchable': false, 'width': '103px', 'className': 'operation-column'}
         ];
     } else {
         return [
-            {'targets': [0,1,2], 'orderable': true}
+            {'targets': 0, 'orderable': false, 'searchable': false},
+            {'targets': [1,2,3], 'orderable': true}
         ];
     }
 }
@@ -37,7 +39,7 @@ const dt = $('#dt').DataTable({
     'lengthChange': false,
     'autoWidth': false,
     'info': true,
-    'order': [[2, "desc"]],
+    'order': [[3, "desc"]],
     'columnDefs': getColumns()
 });
 

@@ -90,6 +90,7 @@
                                 <th>Descrição</th>
                                 <th>Data</th>
 	                            {% if request.user.role == 1 %}
+		                            <th class="text-center">Criado por</th>
                                     <th><i class="fas fa-cogs"></i></th>
 	                            {% endif %}
                             </tr>
@@ -99,14 +100,8 @@
                                 <tr>
                                     <td>
 	                                    {% if problem.status == 1 %}
-		                                    {% comment %}<a class="btn btn-success btn-icon">
-
-	                                        </a>{% endcomment %}
 											 <i class="fas fa-check-square solved"></i>
 		                                {% else %}
-		                                    {% comment %}<a class="btn btn-warning btn-icon">
-	                                            <i class="fas fa-exclamation-triangle"></i>
-	                                        </a>{% endcomment %}
 		                                    <i class="fas fa-exclamation-triangle not-solved"></i>
 	                                    {% endif %}
                                     </td>
@@ -114,7 +109,8 @@
                                     <td>{{ problem.description }}</td>
                                     <td>{{ problem.date }}</td>
 	                                {% if request.user.role == 1 %}
-	                                    <td class="text-right text-center">
+		                                <td class="text-center">{{ problem.userName  }}</td>
+	                                    <td class="text-center">
 	                                        <a href="{% url 'logs:index' problem.pk %}" class="btn btn-info btn-icon">
 	                                            <i class="fas fa-search"></i>
 	                                        </a>

@@ -7,6 +7,7 @@ from django.views.generic import View
 
 from .models import Problem
 from logs.models import Log
+from users.models import CustomUser
 from .forms import ProblemForm
 from logs.forms import LogForm
 
@@ -28,7 +29,9 @@ def index(request):
         messages.success(request, 'Problema inserido com sucesso!')
     for problem in problems:
         log = Log.objects.filter(problem=problem.pk).earliest('date')
+        user = CustomUser.objects.get(pk=problem.user_id)
         problem.date = log.date
+        problem.userName = user.name
     context['problems'] = problems
     context['form'] = form
     context['form'].fields['user'].initial = request.user.id
