@@ -2,6 +2,7 @@ setInitialView();
 
 //Input for searching
 const searchField = $('#dt-search');
+const searchSelect = $('#dt-select-search');
 
 //Counts the number of columns on items table
 function countCols() {
@@ -22,14 +23,14 @@ function getColumns() {
         return [
             {'targets': 0, 'orderable': true},
             {'targets': 1, 'orderable': false},
-            {'targets': 2, 'searchable': false, 'width': '120px', 'className': 'operation-column'},
+            {'targets': 2, 'orderable': false, 'width': '120px', 'className': 'operation-column'},
             {'targets': 3, 'orderable': false, 'searchable': false, 'width': '73px', 'className': 'operation-column'}
         ];
     } else {
         return [
             {'targets': 0, 'orderable': true},
             {'targets': 1, 'orderable': false},
-            {'targets': 2, 'searchable': false, 'width': '120px', 'className': 'operation-column'}
+            {'targets': 2, 'orderable': false, 'width': '120px', 'className': 'operation-column'}
         ];
     }
 }
@@ -55,9 +56,16 @@ function search() {
     if (searchField.val()) {
         dt.search(searchField.val()).draw();
     }
+    if (searchSelect.val()) {
+        dt.columns(2).search(searchSelect.val()).draw();
+    }
 }
 
 //Executes the search on key up
 searchField.on('keyup', function () {
+    search();
+});
+
+searchSelect.on('change', function () {
     search();
 });
