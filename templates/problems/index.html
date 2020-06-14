@@ -78,7 +78,14 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-4 col-md-3">
-                            <input type="search" class="form-control" placeholder="Procurar..." id="dt-search">
+                            <input type="text" class="form-control" placeholder="Procurar..." id="dt-search">
+                        </div>
+                        <div class="col-4 col-md-3">
+                            <select id="inputStatus" class="form-control d-none d-sm-block">
+                                <option value="">Todos status</option>
+                                <option value="1">Resolvido</option>
+                                <option value="0">Não resolvido</option>
+                            </select>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -93,6 +100,7 @@
 		                            <th class="text-center">Criado por</th>
                                     <th><i class="fas fa-cogs"></i></th>
 	                            {% endif %}
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -126,6 +134,7 @@
 	                                        </form>
 	                                    </td>
                                     {% endif %}
+                                    <td>{{ problem.status }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>

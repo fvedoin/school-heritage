@@ -18,16 +18,18 @@ function countCols() {
 
 //Returns the columnDefs configuration depending on the number of columns
 function getColumns() {
-    if (countCols() === 6) {
+    if (countCols() === 7) {
         return [
             {'targets': 0, 'orderable': false, 'searchable': false},
             {'targets': [1,2,3,4], 'orderable': true},
-            {'targets': 5, 'orderable': false, 'searchable': false, 'width': '103px', 'className': 'operation-column'}
+            {'targets': 5, 'orderable': false, 'searchable': false, 'width': '103px', 'className': 'operation-column'},
+            {'targets': 6, 'searchable': true, 'visible': false}
         ];
     } else {
         return [
             {'targets': 0, 'orderable': false, 'searchable': false},
-            {'targets': [1,2,3], 'orderable': true}
+            {'targets': [1,2,3], 'orderable': true},
+            {'targets': 4, 'searchable': true, 'visible': false}
         ];
     }
 }
@@ -51,11 +53,26 @@ function restartSearch() {
 //Looks for the match register on DataTable
 function search() {
     restartSearch();
-    if (searchField.val()) {
-        dt.search(searchField.val()).draw();
+    var valueStatus = $("#inputStatus").val();
+    if (valueStatus != "") {
+        if (countCols() === 6) {
+            dt.columns(6).search(valueStatus).draw();
+        }else{
+            dt.columns(4).search(valueStatus).draw();
+        }
+    }
+    var textSearch = searchField.val();
+    if (textSearch) {
+        dt.search(textSearch).draw();
+    }
+
+    if (valueStatus == "" && textSearch == "") {
+        restartSearch();
     }
 }
-
+$('#inputStatus').change(function () {
+    search();
+});
 //Executes the search on key up
 searchField.on('keyup', function () {
     search();
