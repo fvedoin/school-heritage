@@ -53,7 +53,7 @@ function search() {
     restartSearch();
     var valueStatus = $("#inputStatus").val();
     if (valueStatus) {
-        dt.columns(0).search(valueStatus).draw();
+        dt.columns(0).search("^" + valueStatus + "$", true, false, true).draw();
     }
     var textSearch = searchField.val();
     if (textSearch) {
