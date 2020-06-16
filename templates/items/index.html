@@ -15,58 +15,62 @@
             {% include 'layouts/alert.html' %}
         </div>
     </div>
-    <div class="row" id="form-create">
-        <div class="col-md-10 ml-auto mr-auto">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">
-                        Adicionar Item
-                        <button class="btn btn-sm btn-outline-primary" id="close-form">
-                            <i class="fas fa-times"></i> Fechar
-                        </button>
-                    </h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6 mr-auto ml-auto mb-2">
-                            {% if messages %}
-                                <div class="messages">
-                                    {% for message in messages %}
-                                        <p>{{ message }}</p>
+    {% if request.user.role == 1 %}
+        <div class="row" id="form-create">
+            <div class="col-md-10 ml-auto mr-auto">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">
+                            Adicionar Item
+                            <button class="btn btn-sm btn-outline-primary" id="close-form">
+                                <i class="fas fa-times"></i> Fechar
+                            </button>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mr-auto ml-auto mb-2">
+                                {% if messages %}
+                                    <div class="messages">
+                                        {% for message in messages %}
+                                            <p>{{ message }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <form method="post">
+                                    {% csrf_token %}
+                                    {% for field in form %}
+                                        <div class="form-group">
+                                            {{ field.label_tag }}
+                                            {{ field }}
+                                            {{ field.errors }}
+                                        </div>
                                     {% endfor %}
-                                </div>
-                            {% endif %}
-                            <form method="post">
-                                {% csrf_token %}
-                                {% for field in form %}
-                                    <div class="pure-control-group">
-                                        {{ field.label_tag }}
-                                        {{ field }}
-                                        {{ field.errors }}
+                                    <div class="row">
+                                        <div class="col-md-4"></div>
+                                        <div class="col-md-4">
+                                            <button type="submit" class="btn btn-primary btn-block">Salvar</button>
+                                        </div>
                                     </div>
-                                {% endfor %}
-                                <div class="row">
-                                    <div class="col-md-4"></div>
-                                    <div class="col-md-4">
-                                        <button type="submit" class="btn btn-primary btn-block">Salvar</button>
-                                    </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% endif %}
     <div class="row" id="list">
         <div class="col-md-10 ml-auto mr-auto">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">
                         Lista de itens
-                        <button class="btn btn-sm btn-outline-primary" id="show-form-create">
-                            <i class="fas fa-plus-square"></i> Adicionar Item
-                        </button>
+                        {% if request.user.role == 1 %}
+                            <button class="btn btn-sm btn-outline-primary" id="show-form-create">
+                                <i class="fas fa-plus-square"></i> Adicionar Item
+                            </button>
+                        {% endif %}
                     </h4>
                 </div>
                 <div class="card-body">

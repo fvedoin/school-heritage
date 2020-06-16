@@ -9,20 +9,33 @@ from .models import Item
 from .forms import ItemForm
 
 
-@login_required
-def index(request):
-    items = Item.objects.all()
+class ItemIndexView(View):
     template_name = 'items/index.html'
-    form = ItemForm(request.POST or None)
-    if form.is_valid():
-        form.save()
+
+    @method_decorator(login_required)
+    def get(self, request):
+        items = Item.objects.all()
         form = ItemForm()
-        messages.success(request, 'Item inserido com sucesso!')
-    context = {
-        'items': items,
-        'form': form
-    }
-    return render(request, template_name, context)
+        context = {
+            'items': items,
+            'form': form
+        }
+        return render(request, self.template_name, context)
+
+    @method_decorator(login_required)
+    @method_decorator(schoolmaster_required)
+    def post(self, request):
+        form = ItemForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            form = ItemForm()
+            messages.success(request, 'Item inserido com sucesso!')
+        items = Item.objects.all()
+        context = {
+            'items': items,
+            'form': form
+        }
+        return render(request, self.template_name, context)
 
 
 @method_decorator(login_required, name='dispatch')

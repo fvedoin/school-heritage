@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import index, ItemEditView
+from .views import ItemIndexView, ItemEditView
 
 urlpatterns = [
-    path('', index, name='index'),
+    path('', ItemIndexView.as_view(), name='index'),
     path('<int:pk>/', ItemEditView.as_view(), name='edit'),
 ]
