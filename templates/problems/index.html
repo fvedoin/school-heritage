@@ -3,15 +3,7 @@
 
 {% block css %}
     <link href="{% static 'css/jquery.dataTables.css' %}" rel="stylesheet"/>
-	<link href="{% static 'css/bootstrap-select.css' %}" rel="stylesheet"/>
-	<style>
-		.solved{
-			color: #1c7430;
-		}
-		.not-solved{
-			color: #ffdd43;
-		}
-	</style>
+    <link href="{% static 'css/bootstrap-select.css' %}" rel="stylesheet"/>
 {% endblock %}
 
 {% block title %}
@@ -45,9 +37,9 @@
                                         {{ field }}
                                     {% else %}
                                         <div class="pure-control-group">
-                                        {{ field.label_tag }}
-                                        {{ field }}
-                                        {{ field.errors }}
+                                            {{ field.label_tag }}
+                                            {{ field }}
+                                            {{ field.errors }}
                                         </div>
                                     {% endif %}
                                 {% endfor %}
@@ -83,8 +75,8 @@
                         <div class="col-4 col-md-3">
                             <select id="inputStatus" class="form-control d-none d-sm-block">
                                 <option value="">Todos status</option>
-                                <option value="1">Resolvido</option>
-                                <option value="0">Não resolvido</option>
+                                <option value="solved">Resolvido</option>
+                                <option value="not-solved">Não resolvido</option>
                             </select>
                         </div>
                     </div>
@@ -96,45 +88,46 @@
                                 <th>Item</th>
                                 <th>Descrição</th>
                                 <th>Data</th>
-	                            {% if request.user.role == 1 %}
-		                            <th class="text-center">Criado por</th>
+                                {% if request.user.role == 1 %}
+                                    <th class="text-center">Criado por</th>
                                     <th><i class="fas fa-cogs"></i></th>
-	                            {% endif %}
-                                <th></th>
+                                {% endif %}
                             </tr>
                             </thead>
                             <tbody>
                             {% for problem in problems %}
                                 <tr>
-                                    <td>
-	                                    {% if problem.status == 1 %}
-											 <i class="fas fa-check-square solved"></i>
-		                                {% else %}
-		                                    <i class="fas fa-exclamation-triangle not-solved"></i>
-	                                    {% endif %}
-                                    </td>
+                                    {% if problem.status == 1 %}
+                                        <td data-filter="solved">
+                                            <i class="fas fa-check-circle text-success"></i>
+                                        </td>
+                                    {% else %}
+                                        <td data-filter="not-solved">
+                                            <i class="fas fa-exclamation-triangle text-danger"></i>
+                                        </td>
+                                    {% endif %}
                                     <td>{{ problem.item }}</td>
                                     <td>{{ problem.description }}</td>
                                     <td>{{ problem.date }}</td>
-	                                {% if request.user.role == 1 %}
-		                                <td class="text-center">{{ problem.userName  }}</td>
-	                                    <td class="text-center">
-	                                        <a href="{% url 'logs:index' problem.pk %}" class="btn btn-info btn-icon">
-	                                            <i class="fas fa-search"></i>
-	                                        </a>
-	                                        <a href="{% url 'problems:edit' problem.pk %}" class="btn btn-warning btn-icon">
-	                                            <i class="fas fa-edit"></i>
-	                                        </a>
-	                                        <form method="post" action="{% url 'problems:edit' problem.pk %}">
-	                                            {% csrf_token %}
-	                                            <input type="hidden" name="_method" value="delete">
-	                                            <button type="submit" class="btn btn-danger btn-icon">
-	                                                <i class="fas fa-trash-alt"></i>
-	                                            </button>
-	                                        </form>
-	                                    </td>
+                                    {% if request.user.role == 1 %}
+                                        <td class="text-center">{{ problem.userName }}</td>
+                                        <td class="text-center">
+                                            <a href="{% url 'logs:index' problem.pk %}" class="btn btn-info btn-icon">
+                                                <i class="fas fa-search"></i>
+                                            </a>
+                                            <a href="{% url 'problems:edit' problem.pk %}"
+                                               class="btn btn-warning btn-icon">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <form method="post" action="{% url 'problems:edit' problem.pk %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="_method" value="delete">
+                                                <button type="submit" class="btn btn-danger btn-icon">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </td>
                                     {% endif %}
-                                    <td>{{ problem.status }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -151,6 +144,6 @@
     <script src="{% static 'js/plugins/jquery.mask.min.js' %}"></script>
     <script src="{% static 'js/utils/indexInitialDisplay.js' %}"></script>
     <script src="{% static 'js/scripts/problems-page.js' %}"></script>
-	<script src="{% static 'js/plugins/bootstrap-select.js' %}"></script>
-	<script src="{% static 'js/plugins/bootstrap-select-defaults-pt_BR.js' %}"></script>
+    <script src="{% static 'js/plugins/bootstrap-select.js' %}"></script>
+    <script src="{% static 'js/plugins/bootstrap-select-defaults-pt_BR.js' %}"></script>
 {% endblock %}

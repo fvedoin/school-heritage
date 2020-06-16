@@ -18,18 +18,16 @@ function countCols() {
 
 //Returns the columnDefs configuration depending on the number of columns
 function getColumns() {
-    if (countCols() === 7) {
+    if (countCols() === 6) {
         return [
-            {'targets': 0, 'orderable': false, 'searchable': false},
-            {'targets': [1,2,3,4], 'orderable': true},
-            {'targets': 5, 'orderable': false, 'searchable': false, 'width': '103px', 'className': 'operation-column'},
-            {'targets': 6, 'searchable': true, 'visible': false}
+            {'targets': 0, 'orderable': false, 'searchable': true},
+            {'targets': [1, 2, 3, 4], 'orderable': true},
+            {'targets': 5, 'orderable': false, 'searchable': false, 'width': '103px', 'className': 'operation-column'}
         ];
     } else {
         return [
-            {'targets': 0, 'orderable': false, 'searchable': false},
-            {'targets': [1,2,3], 'orderable': true},
-            {'targets': 4, 'searchable': true, 'visible': false}
+            {'targets': 0, 'orderable': false, 'searchable': true},
+            {'targets': [1, 2, 3], 'orderable': true}
         ];
     }
 }
@@ -54,12 +52,8 @@ function restartSearch() {
 function search() {
     restartSearch();
     var valueStatus = $("#inputStatus").val();
-    if (valueStatus != "") {
-        if (countCols() === 6) {
-            dt.columns(6).search(valueStatus).draw();
-        }else{
-            dt.columns(4).search(valueStatus).draw();
-        }
+    if (valueStatus) {
+        dt.columns(0).search(valueStatus).draw();
     }
     var textSearch = searchField.val();
     if (textSearch) {
@@ -70,6 +64,7 @@ function search() {
         restartSearch();
     }
 }
+
 $('#inputStatus').change(function () {
     search();
 });
