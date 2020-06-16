@@ -72,7 +72,14 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-4 col-md-3">
-                            <input type="search" class="form-control" placeholder="Procurar..." id="dt-search">
+                            <input type="text" class="form-control" placeholder="Procurar..." id="dt-search">
+                        </div>
+                        <div class="col-4 col-md-3">
+                            <select id="dt-select-search" class="form-control d-none d-sm-block">
+                                <option value="">Todas situações</option>
+                                <option value="no-problem">Sem problemas</option>
+                                <option value="w-problem">Com problemas</option>
+                            </select>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -104,13 +111,15 @@
                                     <td>
                                         {{ item.description }}
                                     </td>
-                                    <td>
-                                        {% if item.problems.all|length > 0 %}
+                                    {% if item.problems.all|length > 0 %}
+                                        <td data-filter="w-problem">
                                             <i class="fas fa-exclamation-triangle text-danger"></i>
-                                        {% else %}
+                                        </td>
+                                    {% else %}
+                                        <td data-filter="no-problem">
                                             <i class="fas fa-check-circle text-success"></i>
-                                        {% endif %}
-                                    </td>
+                                        </td>
+                                    {% endif %}
                                     {% if request.user.role == 1 %}
                                         <td class="text-right text-center">
                                             <a href="{% url 'items:edit' item.pk %}"
