@@ -6015,7 +6015,8 @@ ul.errorlist li {
     padding: 0;
 }
 
-.form-group > ul.errorlist > li {
+.form-group > ul.errorlist > li,
+.form-check > ul.errorlist > li {
     color: #C53F3F;
 }
 

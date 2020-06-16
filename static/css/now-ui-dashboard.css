@@ -5989,3 +5989,7 @@ table#dt > tbody > tr > td:last-child:not(.dataTables_empty) > a {
 .messages {
     background: #d4edda !important;
 }
+
+.bootstrap-select > .dropdown-toggle {
+    margin: 0;
+}

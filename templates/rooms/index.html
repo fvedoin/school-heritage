@@ -32,7 +32,7 @@
                             <form method="post">
                                 {% csrf_token %}
                                 {% for field in form %}
-                                    <div class="pure-control-group">
+                                    <div class="form-group">
                                         {{ field.label_tag }}
                                         {{ field }}
                                         {{ field.errors }}
