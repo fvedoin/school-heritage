@@ -4,7 +4,7 @@ from rooms.models import Room
 
 
 class ItemManager(models.Manager):
-    def with_problems_unresolved(self):
+    def with_num_problems_unsolved(self):
         from django.db import connection
         with connection.cursor() as cursor:
             cursor.execute("""

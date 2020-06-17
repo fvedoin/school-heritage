@@ -74,7 +74,7 @@
                         </div>
                         <div class="col-4 col-md-3">
                             <select id="inputStatus" class="form-control d-none d-sm-block">
-                                <option value="">Todos status</option>
+                                <option value="">Todas situações</option>
                                 <option value="solved">Resolvido</option>
                                 <option value="not-solved">Não resolvido</option>
                             </select>
@@ -110,7 +110,7 @@
                                     <td>{{ problem.description }}</td>
                                     <td>{{ problem.first_log.date }}</td>
                                     {% if request.user.role == 1 %}
-                                        <td class="text-center">{{ problem.user.name }}</td>
+                                        <td class="text-center">{{ problem.user.name|title }}</td>
                                         <td class="text-center">
                                             <a href="{% url 'logs:index' problem.pk %}" class="btn btn-info btn-icon">
                                                 <i class="fas fa-search"></i>

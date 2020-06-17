@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from users.decorators import schoolmaster_required
 from django.views.generic import View
+from django.urls import reverse
 
 from .models import Problem
 from logs.models import Log
@@ -48,19 +49,30 @@ class ProblemEditView(View):
 
     def get(self, request, pk):
         problem = get_object_or_404(Problem, pk=pk)
+        back_url = request.GET.get('next', reverse('problems:index'))
         context = {}
         form = ProblemForm(instance=problem)
         context['form'] = form
+        context['back_url'] = back_url
         return render(request, self.template_name, context)
 
     def put(self, request, pk):
         problem = get_object_or_404(Problem, pk=pk)
+        last_status = problem.status
+        back_url = request.GET.get('next', reverse('problems:index'))
         context = {}
         form = ProblemForm(data=request.POST, instance=problem)
         if form.is_valid():
+            if last_status == 0 and problem.status == 1:
+                log = Log(title='Problema resolvido', description='', problem=problem)
+                log.save()
+            elif last_status == 1 and problem.status == 0:
+                log = Log(title='Problema não resolvido', description='', problem=problem)
+                log.save()
             form.save()
             messages.success(request, 'Problema alterado com sucesso!')
         context['form'] = form
+        context['back_url'] = back_url
         return render(request, self.template_name, context)
 
     def delete(self, request, pk):

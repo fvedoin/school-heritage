@@ -11,7 +11,7 @@ class ProblemForm(forms.ModelForm):
         self.fields['user'].widget = forms.HiddenInput()
         CHOICES = [(0, 'Não resolvido'),
                    (1, 'Resolvido')]
-        self.fields['status'] = forms.ChoiceField(choices=CHOICES)
+        self.fields['status'] = forms.ChoiceField(label='Situação', choices=CHOICES)
         self.fields['status'].widget.attrs.update({'class': 'form-control'})
 
     class Meta:

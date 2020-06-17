@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from users.decorators import schoolmaster_required
 from django.views.generic import View
+from django.urls import reverse
 
 from .models import Item
 from .forms import ItemForm
@@ -14,7 +15,7 @@ class ItemIndexView(View):
 
     @method_decorator(login_required)
     def get(self, request):
-        items = Item.objects.with_problems_unresolved()
+        items = Item.objects.with_num_problems_unsolved()
         form = ItemForm()
         context = {
             'items': items,
@@ -30,7 +31,7 @@ class ItemIndexView(View):
             form.save()
             form = ItemForm()
             messages.success(request, 'Item inserido com sucesso!')
-        items = Item.objects.with_problems_unresolved()
+        items = Item.objects.with_num_problems_unsolved()
         context = {
             'items': items,
             'form': form
@@ -53,19 +54,23 @@ class ItemEditView(View):
 
     def get(self, request, pk):
         item = get_object_or_404(Item, pk=pk)
+        back_url = request.GET.get('next', reverse('items:index'))
         context = {}
         form = ItemForm(instance=item)
         context['form'] = form
+        context['back_url'] = back_url
         return render(request, self.template_name, context)
 
     def put(self, request, pk):
         item = get_object_or_404(Item, pk=pk)
+        back_url = request.GET.get('next', reverse('items:index'))
         context = {}
         form = ItemForm(data=request.POST, instance=item)
         if form.is_valid():
             form.save()
             messages.success(request, 'Item alterado com sucesso!')
         context['form'] = form
+        context['back_url'] = back_url
         return render(request, self.template_name, context)
 
     def delete(self, request, pk):

@@ -13,6 +13,7 @@ from logs.forms import LogForm
 
 
 @login_required
+@schoolmaster_required
 def index(request, pk):
     template_name = 'logs/index.html'
     logs = Log.objects.filter(problem_id=pk)
@@ -23,7 +24,6 @@ def index(request, pk):
         form = LogForm()
         messages.success(request, 'Evento inserido com sucesso!')
     problem = Problem.objects.get(pk=pk)
-    #item = Item.objects.get(pk=problem.item_id)
     context['problem'] = problem
     context['item'] = Item.objects.get(pk=problem.item_id)
     context['logs'] = logs

@@ -5,7 +5,7 @@ from users.models import CustomUser
 
 
 class Problem(models.Model):
-    status = models.IntegerField(null=False, blank=False, default=0)
+    status = models.IntegerField(null=False, blank=False, default=0, verbose_name='Situação')
     description = models.TextField(
         'Descrição'
     )
