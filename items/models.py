@@ -18,6 +18,17 @@ class ItemManager(models.Manager):
                 result_list.append(p)
         return result_list
 
+    def count_items_with_problems_unsolved(self):
+        from django.db import connection
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                    select count(*)
+                    from items_item i left join (select count(*) as num_problems_unsolved, item_id from problems_problem p where p.status = 0 group by item_id) as tab_aux_unsolved
+                    on i.id = tab_aux_unsolved.item_id
+                    where num_problems_unsolved > 0    
+                            """)
+            num = cursor.fetchone()
+        return num[0]
 
 class Item(models.Model):
     name = models.CharField(

@@ -1,18 +1,100 @@
-$('#input-periodo').hide();
-$(".data").mask("00/00/0000");
-$('#filtro').change(function () {
-    $('#input-periodo').hide();
-    if (this.value == 'periodo') {
-        $('#input-periodo').show();
+var gaugeOptions = {
+    chart: {
+        type: 'solidgauge'
+    },
+
+    title: null,
+
+    pane: {
+        center: ['50%', '85%'],
+        size: '140%',
+        startAngle: -90,
+        endAngle: 90,
+        background: {
+            backgroundColor:
+                Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
+            innerRadius: '60%',
+            outerRadius: '100%',
+            shape: 'arc'
+        }
+    },
+
+    exporting: {
+        enabled: false
+    },
+
+    tooltip: {
+        enabled: false
+    },
+
+    // the value axis
+    yAxis: {
+        stops: [
+            [0.1, '#55BF3B'], // green
+            [0.5, '#DDDF0D'], // yellow
+            [0.9, '#DF5353'] // red
+        ],
+        lineWidth: 0,
+        tickWidth: 0,
+        minorTickInterval: null,
+        tickAmount: 2,
+        title: {
+            y: -70
+        },
+        labels: {
+            y: 16
+        }
+    },
+
+    plotOptions: {
+        solidgauge: {
+            dataLabels: {
+                y: 5,
+                borderWidth: 0,
+                useHTML: true
+            }
+        }
     }
-});
-$('.data').datepicker({
-    dateFormat: 'dd/mm/yy',
-    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
-    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-    nextText: 'Próximo',
-    prevText: 'Anterior'
-});
+};
+
+function displayGraph(id, value, max, title, spanText, valueSuffix) {
+    var chart = Highcharts.chart(id, Highcharts.merge(gaugeOptions, {
+        yAxis: {
+            min: 0,
+            max: max,
+            title: {
+                text: title
+            },
+            tickPositioner: function () {
+                var tickPositions = this.tickPositions,
+                    lastTick = tickPositions[tickPositions.length - 1],
+                    max = this.options.max;
+
+                if (lastTick > max) {
+                    tickPositions.pop(); // remove last tick
+                    tickPositions.push(max);
+                }
+            }
+        },
+
+        credits: {
+            enabled: false
+        },
+
+        series: [{
+            name: title,
+            data: [value],
+            dataLabels: {
+                format:
+                    '<div style="text-align:center">' +
+                    '<span style="font-size:25px">{y}</span><br/>' +
+                    '<span style="font-size:12px;opacity:0.4">' + spanText + '</span>' +
+                    '</div>'
+            },
+            tooltip: {
+                valueSuffix: valueSuffix
+            }
+        }]
+
+    }));
+}

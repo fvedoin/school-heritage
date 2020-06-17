@@ -21,13 +21,15 @@ function getColumns() {
     if (countCols() === 6) {
         return [
             {'targets': 0, 'orderable': false, 'searchable': true},
-            {'targets': [1, 2, 3, 4], 'orderable': true},
+            {'targets': 1, 'searchable': true, 'orderable': true},
+            {'targets': [2, 3, 4], 'orderable': true},
             {'targets': 5, 'orderable': false, 'searchable': false, 'width': '103px', 'className': 'operation-column'}
         ];
     } else {
         return [
             {'targets': 0, 'orderable': false, 'searchable': true},
-            {'targets': [1, 2, 3], 'orderable': true}
+            {'targets': 1, 'searchable': true},
+            {'targets': [2, 3], 'orderable': true}
         ];
     }
 }
@@ -55,17 +57,25 @@ function search() {
     if (valueStatus) {
         dt.columns(0).search("^" + valueStatus + "$", true, false, true).draw();
     }
+    var valueItem = $('#inputItem').val();
+    if (valueItem) {
+        dt.columns(1).search("^" + valueItem + "$", true, false, true).draw();
+    }
     var textSearch = searchField.val();
     if (textSearch) {
         dt.search(textSearch).draw();
     }
 
-    if (valueStatus == "" && textSearch == "") {
+    if (valueStatus == "" && textSearch == "" && valueItem == "") {
         restartSearch();
     }
 }
 
 $('#inputStatus').change(function () {
+    search();
+});
+
+$('#inputItem').change(function () {
     search();
 });
 //Executes the search on key up

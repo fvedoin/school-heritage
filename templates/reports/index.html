@@ -3,6 +3,7 @@
 
 {% block css %}
     <link href="{% static 'css/jquery-ui.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/highcharts.css' %}" rel="stylesheet"/>
 {% endblock %}
 
 {% block title %}
@@ -20,36 +21,16 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">
-                        Informe os filtros
+                        Patrimônio
                     </h4>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6 mr-auto ml-auto mb-2">
-                            <form method="get">
-                                <div class="form-group">
-                                    <label for="filtro">Tipo</label>
-                                    <select id="filtro" class="form-control" name="filtro">
-                                        <option value="atual">Situação atual</option>
-                                        <option value="periodo">Por período</option>
-                                    </select>
-                                </div>
-                                <div id="input-periodo">
-                                    <div class="form-group">
-                                        <label>Data início</label>
-                                        <input type="text" name="dataInicio" class="form-control data">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Data fim</label>
-                                        <input type="text" name="dataFim" class="form-control data">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 mr-auto ml-auto">
-                                        <button type="submit" class="btn btn-primary btn-block">Buscar</button>
-                                    </div>
-                                </div>
-                            </form>
+                        <div class="col-md-12 mr-auto ml-auto mb-2">
+                            <figure class="highcharts-figure">
+                                <div id="container-items-with-problems" class="chart-container"></div>
+                                <div id="container-problems" class="chart-container"></div>
+                            </figure>
                         </div>
                     </div>
                 </div>
@@ -61,5 +42,15 @@
 {% block script %}
     <script src="{% static 'js/plugins/jquery.mask.min.js' %}"></script>
     <script src="{% static 'js/jquery-ui.js' %}"></script>
+    <script src="{% static 'js/highcharts/highcharts.js' %}"></script>
+    <script src="{% static 'js/highcharts/highcharts-more.js' %}"></script>
+    <script src="{% static 'js/highcharts/solid-gauge.js' %}"></script>
+    <script src="{% static 'js/highcharts/exporting.js' %}"></script>
+    <script src="{% static 'js/highcharts/export-data.js' %}"></script>
+    <script src="{% static 'js/highcharts/accessibility.js' %}"></script>
     <script src="{% static 'js/scripts/reports-page.js' %}"></script>
+    <script>
+        displayGraph('container-items-with-problems', {{ num_items_with_problems }}, {{ total_items }}, 'Número de itens com problemas', 'Itens', ' itens')
+        displayGraph('container-problems', {{ num_problems_unsolved }}, {{ total_problems }}, 'Número de problemas ainda não resolvidos', 'Problemas', ' problemas')
+    </script>
 {% endblock %}

@@ -10,6 +10,7 @@ from .models import Problem
 from logs.models import Log
 from users.models import CustomUser
 from .forms import ProblemForm
+from items.models import Item
 from logs.forms import LogForm
 
 @login_required
@@ -28,6 +29,7 @@ def index(request):
         log = Log(title='Problema criado', description='', problem=problem_id)
         log.save()
         messages.success(request, 'Problema inserido com sucesso!')
+    context['items'] = Item.objects.all()
     context['problems'] = problems
     context['form'] = form
     context['form'].fields['user'].initial = request.user.id

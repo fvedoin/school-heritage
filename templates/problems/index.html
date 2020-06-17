@@ -79,6 +79,15 @@
                                 <option value="not-solved">Não resolvido</option>
                             </select>
                         </div>
+                        <div class="col-4 col-md-3">
+                            <select id="inputItem" class="form-control selectpicker bootstrap-select"
+                                    data-live-search="true">
+                                <option value="">Todos itens</option>
+                                {% for item in items %}
+                                    <option value="{{ item.id }}">{{ item }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
                     </div>
                     <div class="table-responsive">
                         <table class="table" id="dt">
@@ -106,9 +115,9 @@
                                             <i class="fas fa-exclamation-triangle text-danger"></i>
                                         </td>
                                     {% endif %}
-                                    <td>{{ problem.item }}</td>
+                                    <td data-filter="{{ problem.item.id }}">{{ problem.item }}</td>
                                     <td>{{ problem.description }}</td>
-                                    <td>{{ problem.first_log.date }}</td>
+                                    <td data-order="{{ problem.first_log.date|date:'Y-m-d H:i:s' }}">{{ problem.first_log.date }}</td>
                                     {% if request.user.role == 1 %}
                                         <td class="text-center">{{ problem.user.name|title }}</td>
                                         <td class="text-center">
