@@ -1,11 +1,10 @@
 .highcharts-figure .chart-container {
     width: 300px;
     height: 200px;
-    float: left;
+    margin: auto;
 }
 
 .highcharts-figure, .highcharts-data-table table {
-    width: 600px;
     margin: 0 auto;
 }
 
@@ -48,7 +47,6 @@
     }
 
     .highcharts-figure .chart-container {
-        width: 300px;
         float: none;
         margin: 0 auto;
     }
