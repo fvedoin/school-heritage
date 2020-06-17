@@ -14,7 +14,7 @@ class ItemIndexView(View):
 
     @method_decorator(login_required)
     def get(self, request):
-        items = Item.objects.all()
+        items = Item.objects.with_problems_unresolved()
         form = ItemForm()
         context = {
             'items': items,
@@ -30,7 +30,7 @@ class ItemIndexView(View):
             form.save()
             form = ItemForm()
             messages.success(request, 'Item inserido com sucesso!')
-        items = Item.objects.all()
+        items = Item.objects.with_problems_unresolved()
         context = {
             'items': items,
             'form': form

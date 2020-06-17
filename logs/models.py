@@ -11,7 +11,8 @@ class Log(models.Model):
 
     problem = models.ForeignKey(
         Problem, verbose_name='Problema',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='logs'
     )
 
 
@@ -21,3 +22,4 @@ class Log(models.Model):
     class Meta:
         verbose_name = 'Log'
         verbose_name_plural = 'Logs'
+        ordering = ['date']

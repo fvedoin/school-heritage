@@ -103,12 +103,12 @@
                             {% for item in items %}
                                 <tr>
                                     <td>
-                                        {{ item.name }}
+                                        {{ item.name|capfirst }}
                                     </td>
                                     <td>
                                         {{ item.description }}
                                     </td>
-                                    {% if item.problems.all|length > 0 %}
+                                    {% if item.num_problems_unsolved > 0 %}
                                         <td data-filter="w-problem">
                                             <i class="fas fa-exclamation-triangle text-danger"></i>
                                         </td>

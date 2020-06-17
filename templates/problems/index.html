@@ -87,9 +87,9 @@
                                 <th></th>
                                 <th>Item</th>
                                 <th>Descrição</th>
-                                <th>Data</th>
+                                <th>Criado em</th>
                                 {% if request.user.role == 1 %}
-                                    <th class="text-center">Criado por</th>
+                                    <th class="text-center">Por</th>
                                     <th><i class="fas fa-cogs"></i></th>
                                 {% endif %}
                             </tr>
@@ -108,9 +108,9 @@
                                     {% endif %}
                                     <td>{{ problem.item }}</td>
                                     <td>{{ problem.description }}</td>
-                                    <td>{{ problem.date }}</td>
+                                    <td>{{ problem.first_log.date }}</td>
                                     {% if request.user.role == 1 %}
-                                        <td class="text-center">{{ problem.userName }}</td>
+                                        <td class="text-center">{{ problem.user.name }}</td>
                                         <td class="text-center">
                                             <a href="{% url 'logs:index' problem.pk %}" class="btn btn-info btn-icon">
                                                 <i class="fas fa-search"></i>
