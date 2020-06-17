@@ -15,55 +15,59 @@
             {% include 'layouts/alert.html' %}
         </div>
     </div>
-    <div class="row" id="form-create">
-        <div class="col-md-10 ml-auto mr-auto">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">
-                        Adicionar evento
-                        <button class="btn btn-sm btn-outline-primary" id="close-form">
-                            <i class="fas fa-times"></i> Fechar
-                        </button>
-                    </h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6 mr-auto ml-auto mb-2">
-                            <form method="post">
-                                {% csrf_token %}
-                                {% for field in form %}
-                                    {% if field.is_hidden %}
-                                        {{ field }}
-                                    {% else %}
-                                        <div class="form-group">
-                                            {{ field.label_tag }}
+    {% if problem.status == 0 %}
+        <div class="row" id="form-create">
+            <div class="col-md-10 ml-auto mr-auto">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">
+                            Adicionar evento
+                            <button class="btn btn-sm btn-outline-primary" id="close-form">
+                                <i class="fas fa-times"></i> Fechar
+                            </button>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mr-auto ml-auto mb-2">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    {% for field in form %}
+                                        {% if field.is_hidden %}
                                             {{ field }}
-                                            {{ field.errors }}
+                                        {% else %}
+                                            <div class="form-group">
+                                                {{ field.label_tag }}
+                                                {{ field }}
+                                                {{ field.errors }}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <div class="row">
+                                        <div class="col-md-4"></div>
+                                        <div class="col-md-4">
+                                            <button type="submit" class="btn btn-primary btn-block">Salvar</button>
                                         </div>
-                                    {% endif %}
-                                {% endfor %}
-                                <div class="row">
-                                    <div class="col-md-4"></div>
-                                    <div class="col-md-4">
-                                        <button type="submit" class="btn btn-primary btn-block">Salvar</button>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% endif %}
     <div class="row" id="list">
         <div class="col-md-10 ml-auto mr-auto">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">
                         Lista de eventos
-                        <button class="btn btn-sm btn-outline-primary" id="show-form-create">
-                            <i class="fas fa-plus-square"></i> Adicionar evento
-                        </button>
+                        {% if problem.status == 0 %}
+                            <button class="btn btn-sm btn-outline-primary" id="show-form-create">
+                                <i class="fas fa-plus-square"></i> Adicionar evento
+                            </button>
+                        {% endif %}
                     </h4>
                     <p style="opacity: 0.6">
                         <a href="{% url 'items:edit' item.pk %}?next={{ request.path|urlencode }}">
