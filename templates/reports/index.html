@@ -11,115 +11,132 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10 ml-auto mr-auto">
-            <button class="btn btn-primary" id="export">
-                Exportar para PDF
-            </button>
+    {% if total_problems == 0 %}
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10 ml-auto mr-auto">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">
+                            Nenhum problema cadastrado
+                        </h4>
+                    </div>
+                    <div class="card-body"></div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
         </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-5 ml-auto mr-auto">
-            <div class="card card-graph">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12 mr-auto ml-auto mb-2">
-                            <figure class="highcharts-figure">
-                                <div id="container-items-with-problems" class="chart-container"></div>
-                            </figure>
+    {% else %}
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10 ml-auto mr-auto">
+                <button class="btn btn-primary" id="export">
+                    Exportar para PDF
+                </button>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-1"></div>
+            <div class="col-md-5 ml-auto mr-auto">
+                <div class="card card-graph">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 mr-auto ml-auto mb-2">
+                                <figure class="highcharts-figure">
+                                    <div id="container-items-with-problems" class="chart-container"></div>
+                                </figure>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-5 ml-auto mr-auto">
-            <div class="card card-graph">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12 mr-auto ml-auto mb-2">
-                            <figure class="highcharts-figure">
-                                <div id="container-problems" class="chart-container"></div>
-                            </figure>
+            <div class="col-md-5 ml-auto mr-auto">
+                <div class="card card-graph">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 mr-auto ml-auto mb-2">
+                                <figure class="highcharts-figure">
+                                    <div id="container-problems" class="chart-container"></div>
+                                </figure>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col-md-1"></div>
         </div>
-        <div class="col-md-1"></div>
-    </div>
-    <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-5 ml-auto mr-auto">
-            <div class="card card-graph">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="createProblemsDateIni">De</label>
-                                <input class="form-control data" id="createProblemsDateIni" type="text"
-                                       value="{{ data_inicio_mes|date:'d/m/Y' }}">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-5 ml-auto mr-auto">
+                <div class="card card-graph">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="createProblemsDateIni">De</label>
+                                    <input class="form-control data" id="createProblemsDateIni" type="text"
+                                           value="{{ data_inicio_mes|date:'d/m/Y' }}">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="createProblemsDateFin">Até</label>
-                                <input class="form-control data" id="createProblemsDateFin" type="text"
-                                       value="{{ data_hoje|date:'d/m/Y' }}">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="createProblemsDateFin">Até</label>
+                                    <input class="form-control data" id="createProblemsDateFin" type="text"
+                                           value="{{ data_hoje|date:'d/m/Y' }}">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <ul class="errorlist errorgraph">
-                                    <li id="errorGraphProblemsCreated"></li>
-                                </ul>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <ul class="errorlist errorgraph">
+                                        <li id="errorGraphProblemsCreated"></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-12 mr-auto ml-auto mb-2">
-                            <figure class="highcharts-figure">
-                                <div id="container-problems-created" class="chart-container"></div>
-                            </figure>
+                            <div class="col-md-12 mr-auto ml-auto mb-2">
+                                <figure class="highcharts-figure">
+                                    <div id="container-problems-created" class="chart-container"></div>
+                                </figure>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-5 ml-auto mr-auto">
-            <div class="card card-graph">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="resolvedProblemsDateIni">De</label>
-                                <input class="form-control data" id="resolvedProblemsDateIni" type="text"
-                                       value="{{ data_inicio_mes|date:'d/m/Y' }}">
+            <div class="col-md-5 ml-auto mr-auto">
+                <div class="card card-graph">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="resolvedProblemsDateIni">De</label>
+                                    <input class="form-control data" id="resolvedProblemsDateIni" type="text"
+                                           value="{{ data_inicio_mes|date:'d/m/Y' }}">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="resolvedProblemsDateFin">Até</label>
-                                <input class="form-control data" id="resolvedProblemsDateFin" type="text"
-                                       value="{{ data_hoje|date:'d/m/Y' }}">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="resolvedProblemsDateFin">Até</label>
+                                    <input class="form-control data" id="resolvedProblemsDateFin" type="text"
+                                           value="{{ data_hoje|date:'d/m/Y' }}">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <ul class="errorlist errorgraph">
-                                    <li id="errorGraphProblemsResolved"></li>
-                                </ul>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <ul class="errorlist errorgraph">
+                                        <li id="errorGraphProblemsResolved"></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-12 mr-auto ml-auto mb-2">
-                            <figure class="highcharts-figure">
-                                <div id="container-problems-resolved" class="chart-container"></div>
-                            </figure>
+                            <div class="col-md-12 mr-auto ml-auto mb-2">
+                                <figure class="highcharts-figure">
+                                    <div id="container-problems-resolved" class="chart-container"></div>
+                                </figure>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col-md-1"></div>
         </div>
-        <div class="col-md-1"></div>
-    </div>
+    {% endif %}
 {% endblock %}
 
 {% block script %}
@@ -136,7 +153,7 @@
     <script>
         displayGraph('container-items-with-problems', {{ num_items_with_problems }}, {{ total_items }}, 'Número de itens com problemas', 'Itens', ' itens')
         displayGraph('container-problems', {{ num_problems_unsolved }}, {{ total_problems }}, 'Número de problemas ainda não resolvidos', 'Problemas', ' problemas')
-        displayGraph('container-problems-created', {{ num_problems_created }}, {{ total_problems }}, 'Problemas criados <br>entre {{ data_inicio_mes|date:"d/m/Y" }} e {{ data_hoje|date:"d/m/Y" }}', 'Problemas', ' problemas')
-        displayGraph('container-problems-resolved', {{ num_problems_resolved }}, {{ total_problems }}, 'Problemas resolvidos <br>entre {{ data_inicio_mes|date:"d/m/Y" }} e {{ data_hoje|date:"d/m/Y" }}', 'Problemas', ' problemas')
+        displayGraph('container-problems-created', {{ num_problems_created }}, {{ total_problems }}, 'Problemas criados <br>entre {{ data_inicio_mes|date:"d/m/Y" }} e {{ data_hoje|date:"d/m/Y" }}', 'Problemas', ' problemas', false)
+        displayGraph('container-problems-resolved', {{ num_problems_resolved }}, {{ total_problems }}, 'Problemas resolvidos <br>entre {{ data_inicio_mes|date:"d/m/Y" }} e {{ data_hoje|date:"d/m/Y" }}', 'Problemas', ' problemas', false)
     </script>
 {% endblock %}

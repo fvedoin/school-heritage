@@ -82,11 +82,6 @@ var gaugeOptions = {
 
     // the value axis
     yAxis: {
-        stops: [
-            [0.1, '#55BF3B'], // green
-            [0.5, '#DDDF0D'], // yellow
-            [0.9, '#DF5353'] // red
-        ],
         lineWidth: 0,
         tickWidth: 0,
         minorTickInterval: null,
@@ -110,13 +105,26 @@ var gaugeOptions = {
     }
 };
 
-function displayGraph(id, value, max, title, spanText, valueSuffix) {
+function displayGraph(id, value, max, title, spanText, valueSuffix, colors = true) {
+    if (colors) {
+        var stops = [
+            [0.1, '#55BF3B'], // green
+            [0.5, '#DDDF0D'], // yellow
+            [0.9, '#DF5353'] // red
+        ];
+    } else {
+        var stops = [
+            [0.1, '#3c4df5']
+        ];
+    }
+
     Highcharts.chart(id, Highcharts.merge(gaugeOptions, {
         title: {
             text: title
         },
 
         yAxis: {
+            stops: stops,
             min: 0,
             max: max,
             tickPositioner: function () {
