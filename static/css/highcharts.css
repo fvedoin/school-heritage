@@ -1,11 +1,15 @@
 .highcharts-figure .chart-container {
     width: 300px;
-    height: 200px;
+    height: 250px;
     margin: auto;
 }
 
 .card-graph {
     overflow: auto;
+}
+
+.errorgraph {
+    height: 10px;
 }
 
 .highcharts-figure, .highcharts-data-table table {
