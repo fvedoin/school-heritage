@@ -119,7 +119,7 @@
                                                class="btn btn-warning btn-icon">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form method="post" action="{% url 'problems:edit' problem.pk %}">
+                                            <form method="post" action="{% url 'problems:edit' problem.pk %}" class="exclusion-form">
                                                 {% csrf_token %}
                                                 <input type="hidden" name="_method" value="delete">
                                                 <button type="submit" class="btn btn-danger btn-icon">
@@ -142,7 +142,9 @@
 {% block script %}
     <script src="{% static 'js/plugins/jquery.dataTables.js' %}"></script>
     <script src="{% static 'js/plugins/jquery.mask.min.js' %}"></script>
+    <script src="{% static 'js/plugins/bootbox.min.js' %}"></script>
     <script src="{% static 'js/utils/indexInitialDisplay.js' %}"></script>
+    <script src="{% static 'js/utils/deletionConfirmation.js' %}"></script>
     <script src="{% static 'js/scripts/problems-page.js' %}"></script>
     <script src="{% static 'js/plugins/bootstrap-select.js' %}"></script>
     <script src="{% static 'js/plugins/bootstrap-select-defaults-pt_BR.js' %}"></script>
