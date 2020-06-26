@@ -149,7 +149,7 @@
                                            class="btn btn-sm btn-warning btn-icon">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <form method="post" action="{% url 'users:edit' user.pk %}">
+                                        <form method="post" action="{% url 'users:edit' user.pk %}" class="exclusion-form">
                                             {% csrf_token %}
                                             <input type="hidden" name="_method" value="delete">
                                             <button type="submit" class="btn btn-sm btn-danger btn-icon">
@@ -171,6 +171,8 @@
 {% block script %}
     <script src="{% static 'js/plugins/jquery.dataTables.js' %}"></script>
     <script src="{% static 'js/plugins/jquery.mask.min.js' %}"></script>
+    <script src="{% static 'js/plugins/bootbox.min.js' %}"></script>
     <script src="{% static 'js/utils/indexInitialDisplay.js' %}"></script>
+    <script src="{% static 'js/utils/deletionConfirmation.js' %}"></script>
     <script src="{% static 'js/scripts/users-page.js' %}"></script>
 {% endblock %}
